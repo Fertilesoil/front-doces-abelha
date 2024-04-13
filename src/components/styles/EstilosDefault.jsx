@@ -6,6 +6,6 @@ export const formsInput = "bg-[#8BBBC9] px-4 py-2 rounded-md text-[#FCF5ED] plac
 export const formsButton = "px-8 py-2 bg-[#8BBBC9] rounded-md font-[500] text-white";
 
 // CADASTRO
-export const formsCadastro = "flex flex-col gap-3 justify-center items-center text-[#1D4151] font-ManRope text-[1rem]";
+export const formsCadastro = "flex flex-col gap-3 justify-center items-center text-[#1D4151] font-ManRope text-[.9rem]";
 export const formsLegendCadastro = "text-[4rem] font-[600] antialiased bg-login-image bg-center bg-[320px]  bg-clip-text text-transparent font-Handlee";
 

@@ -1,12 +1,37 @@
 ﻿import { useState } from "react";
 import { childrenPropType } from "../../PropTypes/PropTypeValidation"
 import { AuthContext } from "./UserContext";
-import { Api } from "../../services/Api";
-
+import { Api, interceptador } from "../../services/Api";
 
 export const AuthProvider = ({ children }) => {
 
   const [usuario, setUsuario] = useState(null);
+
+  const manter = () => {
+    Api.interceptors.request.use(async (config) => {
+
+      try {
+        let token = "";
+        const response = await interceptador.post("/api/refresh", {
+          token
+        });
+
+        config.headers.Authorization = `Bearer ${response.data.tokenAcesso}`;
+
+        const perfil = await interceptador.get("/api/autenticacao", {
+          headers: {
+            Authorization: `Bearer ${response.data.tokenAcesso}`
+          }
+        });
+
+        setUsuario({ perfil: perfil.data, token: response.data.tokenAcesso });
+        return usuario.perfil.sobrenome;
+      } catch (error) {
+        console.log(`Erro: ${error}`);
+      }
+      return config;
+    })
+  }
 
   const loginApiCall = async (payload) => {
     try {
@@ -22,15 +47,21 @@ export const AuthProvider = ({ children }) => {
       });
 
       setUsuario({ perfil: perfil.data, token: token });
-      console.log(usuario);
       return response;
     } catch (error) {
       console.log(`Erro: ${error}`);
     }
   }
 
+  const shared = {
+    usuario,
+    loginApiCall,
+    manter,
+    setUsuario
+  }
+
   return (
-    <AuthContext.Provider value={{ usuario, loginApiCall }}>
+    <AuthContext.Provider value={shared}>
       {children}
     </AuthContext.Provider>
   );

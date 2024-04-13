@@ -3,7 +3,8 @@ import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Cadastro from "../pages/Cadastro";
 import HomePage from "../pages/HomePage";
-import Protected from "../middleware/Protected";
+import Protected from "../middlewares/Protected";
+
 
 export const router = createBrowserRouter([
     { path: '/', element: <Protected> <HomePage /> </Protected> },

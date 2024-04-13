@@ -6,7 +6,7 @@ const HomePage = () => {
   const { usuario } = useContext(AuthContext);
 
   return (
-    < div > Bem vinde { usuario.perfil.primeiro_nome } { usuario.perfil.sobrenome } !</div >
+    < div > Bem vinde {usuario.perfil.primeiro_nome} {usuario.perfil.sobrenome} !</div >
   );
 }
 

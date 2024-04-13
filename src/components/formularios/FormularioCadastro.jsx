@@ -1,16 +1,39 @@
 ﻿import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { formsButton, formsCadastro, formsInput, formsLegendCadastro } from "../styles/EstilosDefault"
+import { Api } from "../../services/Api"
+import toast from "react-hot-toast"
 
 const FormularioCadastro = () => {
 
   const [value, setValue] = useState({
-    prieiro_nome: "",
+    primeiro_nome: "",
     sobrenome: "",
     email: "",
-    senha1: "",
-    senha2: ""
+    senha: "",
+    senha_comparada: ""
   })
+
+  const navigate = useNavigate();
+
+  const cadastrarUsuario = async (e) => {
+    e.preventDefault();
+
+    try {
+      const cadastro = await Api.post("/api/criarUsuario", value);
+
+      if (cadastro.data.usuarioCriado) {
+        toast.success("Parabéns, seu usuário foi cadastrado com sucesso!");
+        navigate("/login")
+      }
+
+      if (cadastro.data.msg) {
+        toast.error(cadastro.data.msg);
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  }
 
   return (
     <form className={`${formsCadastro}`}>
@@ -51,7 +74,7 @@ const FormularioCadastro = () => {
         <input
           className={`${formsInput}`}
           type="password"
-          onChange={e => setValue({ ...value, senha1: e.target.value })}
+          onChange={e => setValue({ ...value, senha: e.target.value })}
           autoComplete="false"
           placeholder="Senha"
         />
@@ -61,13 +84,16 @@ const FormularioCadastro = () => {
         <input
           className={`${formsInput}`}
           type="password"
-          onChange={e => setValue({ ...value, senha2: e.target.value })}
+          onChange={e => setValue({ ...value, senha_comparada: e.target.value })}
           autoComplete="false"
           placeholder="Confirmar senha"
         />
       </label>
 
-      <button className={`${formsButton}`}>
+      <button
+        className={`${formsButton}`}
+        onClick={cadastrarUsuario}
+      >
         Cadastrar
       </button>
 

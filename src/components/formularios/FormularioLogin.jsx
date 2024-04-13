@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { forms, formsButton, formsInput, formsLegend } from "../styles/EstilosDefault"
 import { AuthContext } from "../../contexts/UserContext/UserContext"
+import toast from "react-hot-toast"
 
 const FormularioLogin = () => {
 
@@ -20,7 +21,11 @@ const FormularioLogin = () => {
     try {
       const response = await loginApiCall(value);
 
-      if (response) {
+      if (response.data.msg === "Email ou senha inválidos") {
+        toast.error(response.data.msg);
+        navigate("/login", { replace: true });
+      } else {
+        toast.success("Logado com sucesso");
         navigate("/");
       }
     } catch (error) {
