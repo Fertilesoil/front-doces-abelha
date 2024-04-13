@@ -7,5 +7,5 @@ export const formsButton = "px-8 py-2 bg-[#8BBBC9] rounded-md font-[500] text-wh
 
 // CADASTRO
 export const formsCadastro = "flex flex-col gap-3 justify-center items-center text-[#1D4151] font-ManRope text-[1rem]";
-export const formsLegendCadastro = "text-[4rem] font-[600] antialiased bg-login-image bg-left-top bg-clip-text text-transparent font-Handlee";
+export const formsLegendCadastro = "text-[4rem] font-[600] antialiased bg-login-image bg-center bg-[320px]  bg-clip-text text-transparent font-Handlee";
 
