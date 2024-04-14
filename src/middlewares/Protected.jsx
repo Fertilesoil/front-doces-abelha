@@ -2,7 +2,7 @@
 import { AuthContext } from "../contexts/UserContext/UserContext";
 import { useNavigate } from "react-router-dom";
 import { childrenPropType } from "../PropTypes/PropTypeValidation";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 const Protected = ({ children }) => {
   const { usuario } = useContext(AuthContext);
@@ -11,7 +11,7 @@ const Protected = ({ children }) => {
 
   useEffect(() => {
     if (usuario === null) {
-      toast.error("Faça o login para acessar esta página");
+      // toast.error("Faça o login para acessar esta página");
       navigate("/login", { replace: true });
     }
   }, [usuario, navigate]);

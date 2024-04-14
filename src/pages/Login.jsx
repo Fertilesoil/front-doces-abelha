@@ -3,7 +3,7 @@ import FormsWraper from "../components/formularios/FormsWraper";
 import FormularioLogin from "../components/formularios/FormularioLogin";
 import { AuthContext } from "../contexts/UserContext/UserContext";
 import { useNavigate } from "react-router-dom";
-import { buscarToken } from "../services/Usuario";
+import { buscarToken } from "../services/UsuarioService";
 
 const Login = () => {
 
@@ -12,13 +12,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = buscarToken( setUsuario);
-
-    token.then(result => {
-      if (result === null) {
-        navigate("/");
-      }
-    })
+    buscarToken(setUsuario)
+      .then(result => {
+        if (result === null) {
+          navigate("/");
+        }
+      });
   });
 
 

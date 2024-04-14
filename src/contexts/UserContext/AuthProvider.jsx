@@ -6,6 +6,7 @@ import { Api, interceptador } from "../../services/Api";
 export const AuthProvider = ({ children }) => {
 
   const [usuario, setUsuario] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const manter = () => {
     Api.interceptors.request.use(async (config) => {
@@ -57,7 +58,9 @@ export const AuthProvider = ({ children }) => {
     usuario,
     loginApiCall,
     manter,
-    setUsuario
+    setUsuario,
+    loading,
+    setLoading
   }
 
   return (

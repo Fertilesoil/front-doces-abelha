@@ -3,7 +3,7 @@ import FormsWraper from "../components/formularios/FormsWraper";
 import FormularioCadastro from "../components/formularios/FormularioCadastro";
 import { AuthContext } from "../contexts/UserContext/UserContext";
 import { useNavigate } from "react-router-dom";
-import { buscarToken } from "../services/Usuario";
+import { buscarToken } from "../services/UsuarioService";
 
 const Cadastro = () => {
 
@@ -12,13 +12,12 @@ const Cadastro = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = buscarToken( setUsuario);
-
-    token.then(result => {
-      if (result === null) {
-        navigate("/");
-      }
-    })
+    buscarToken(setUsuario)
+      .then(result => {
+        if (result === null) {
+          navigate("/");
+        }
+      });
   });
 
   console.log(`Fui montado`);
