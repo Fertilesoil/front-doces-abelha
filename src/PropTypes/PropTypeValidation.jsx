@@ -14,3 +14,13 @@ export const childrenPropType = {
 export const childrenCollectionPropType = {
   children: PropTypes.array
 }
+
+export const navbarPropType = {
+  icone: PropTypes.object,
+  texto: PropTypes.string,
+  ativo: PropTypes.bool
+}
+
+export const perfilPropType = {
+  props: PropTypes.bool
+}

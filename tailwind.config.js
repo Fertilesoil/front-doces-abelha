@@ -7,11 +7,14 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'login-image': "url('./src/assets/516cdefd-88d1-4f1a-a898-20e3f7c47d83.jpg')"
+        'login-image': "url('./src/assets/abelhas-login.jpg')",
+        'abelha-home': "url('./src/assets/abelha-home.jpg')"
       },
       fontFamily: {
         ManRope: ["Manrope", "sans-serif"],
-        Handlee: ["Handlee", "cursive"]
+        Handlee: ["Handlee", "cursive"],
+        Nunito: ["Nunito", "sans-serif"],
+        SpecialElite: ["Special Elite", "system-ui"],
       }
     },
   },

@@ -8,6 +8,16 @@ export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const obterIniciais = (usuario) => {
+    const primeiraLetra = usuario?.perfil.nome.split("")[0];
+    const segundaLetra = usuario?.perfil.sobrenome.split("")[0];
+    const nomePerfil = primeiraLetra + segundaLetra;
+
+    return nomePerfil;
+  }
+
+  const iniciais = obterIniciais(usuario);
+
   const manter = () => {
     Api.interceptors.request.use(async (config) => {
 
@@ -48,9 +58,22 @@ export const AuthProvider = ({ children }) => {
       });
 
       setUsuario({ perfil: perfil.data, token: token });
-      return response;
+      return response.data;
     } catch (error) {
       console.log(`Erro: ${error}`);
+      return error;
+    }
+  }
+
+  const logoutApiCall = async () => {
+    try {
+      const deslogar = await Api.post("/api/logout");
+      console.log(deslogar.data);
+      if (deslogar) {
+        return null;
+      }
+    } catch (error) {
+      console.log(`Erro: ${error.message}`);
     }
   }
 
@@ -60,7 +83,9 @@ export const AuthProvider = ({ children }) => {
     manter,
     setUsuario,
     loading,
-    setLoading
+    setLoading,
+    iniciais,
+    logoutApiCall
   }
 
   return (

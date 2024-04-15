@@ -26,12 +26,13 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
-      < div >
-        Bem vinde {usuario.perfil.primeiro_nome} {usuario.perfil.sobrenome} !
-      </div >
+    <main className='h-screen after:bg-abelha-home after:top-0 after:left-0 after:w-[100vw] after:fixed after:h-[100vh] after:bg-center after:bg-contain after:bg-no-repeat after:opacity-20 after:z-[-10]  flex justify-center items-center flex-col '>
 
-      {loading ?
+      {/* < div >
+        Bem vinde {usuario.perfil.primeiro_nome} {usuario.perfil.sobrenome} !
+      </div > */}
+
+      {/* {loading ?
         (<p>Carregando</p>)
         : produtos.map((item, index) => (
           <ul key={index}>
@@ -42,8 +43,8 @@ const HomePage = () => {
 
             {usuario && <li>{usuario.perfil.email}</li>}
           </ul>
-        ))}
-    </>
+        ))} */}
+    </main>
   );
 }
 

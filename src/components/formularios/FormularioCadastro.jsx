@@ -26,12 +26,8 @@ const FormularioCadastro = () => {
         toast.success("Parabéns, seu usuário foi cadastrado com sucesso!");
         navigate("/login")
       }
-
-      if (cadastro.data.msg) {
-        toast.error(cadastro.data.msg);
-      }
     } catch (error) {
-      toast.error(error);
+      toast.error(error.response.status + ": " + error.response.data.msg);
     }
   }
 

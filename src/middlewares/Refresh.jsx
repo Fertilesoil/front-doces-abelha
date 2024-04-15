@@ -1,4 +1,5 @@
-﻿import { useContext, useEffect } from "react";
+﻿/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect } from "react";
 import { childrenPropType } from "../PropTypes/PropTypeValidation";
 import { Api } from "../services/Api";
 import { AuthContext } from "../contexts/UserContext/UserContext";
@@ -27,7 +28,7 @@ const Refresh = async ({ children }) => {
 
       setUsuario({ perfil: perfil.data, token: response.data.tokenAcesso });
       toast.success("Autenticado com sucesso!");
-      toast.success("Bem vindo de volta!");
+      toast.success(`Bem vinde de volta ${perfil.data.nome}!`);
       navigate("/");
     } catch (error) {
       console.log(`Erro: ${error}`);
