@@ -1,4 +1,4 @@
-﻿import { Link, Outlet, useNavigate } from "react-router-dom";
+﻿import { Outlet, useNavigate } from "react-router-dom";
 import Navigation, { NavbarItem } from "../components/navigation/Navigation";
 import {
   BarChartBig,
@@ -28,30 +28,26 @@ const DefaultLayout = () => {
       }
     } catch (error) {
       console.log(`Erro: ${error}`);
+      toast.error(error.message);
     }
-    return console.log(`Coisa parecida`);
   }
 
   return (
     <>
       <Navigation>
-        <Link to="/">
-          <NavbarItem icone={<Home size={25} />} texto="Home" />
-        </Link>
 
-        <Link to="/produtosVenda">
-          <NavbarItem icone={<Box size={25} />} texto="Produtos" />
-        </Link>
+        <NavbarItem to="/" icone={<Home size={25} />} texto="Home" />
 
-        <NavbarItem icone={<PackageSearch size={25} />} texto="Estoque" />
+        <NavbarItem to="/produtosVenda" icone={<Box size={25} />} texto="Produtos" />
 
-        <NavbarItem icone={<ChefHat size={25} />} texto="Recheios" />
+        <NavbarItem to="/" icone={<PackageSearch size={25} />} texto="Estoque" />
 
-        <NavbarItem icone={<BarChartBig size={25} />} texto="Vendas" />
+        <NavbarItem to="/" icone={<ChefHat size={25} />} texto="Recheios" />
 
-        <Link onClick={logout}>
-          <NavbarItem icone={<DoorOpen size={25} />} texto="Logout" />
-        </Link>
+        <NavbarItem to="/" icone={<BarChartBig size={25} />} texto="Vendas" />
+
+        <NavbarItem funcao={logout} icone={<DoorOpen size={25} />} texto="Logout" />
+
       </Navigation>
       <Outlet />
     </>

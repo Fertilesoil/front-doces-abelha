@@ -2,6 +2,7 @@
 import { createContext, useContext, useState } from "react";
 import { childrenCollectionPropType, navbarPropType } from "../../PropTypes/PropTypeValidation";
 import Perfil from "./Perfil";
+import { Link } from "react-router-dom";
 
 const NavbarContext = createContext({});
 
@@ -39,18 +40,24 @@ const Navigation = ({ children }) => {
   )
 }
 
-export function NavbarItem({ icone, texto }) {
+export function NavbarItem({ icone, texto, to, funcao }) {
   const { expandido } = useContext(NavbarContext);
 
   return (
-    <li className={`relative flex items-center py-2 ${expandido ? "px-3" : "px-2"} my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-[#1D4151] hover:text-[#F7F7F7] text-[#1D4151]`}>
+    <Link className={
+      `relative flex items-center py-2 ${expandido ? "px-3" : "px-2"} my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-[#1D4151] hover:text-[#F7F7F7] text-[#1D4151] `}
+      to={to}
+      onClick={funcao}
+    >
+
       {icone}
-      <span className={`overflow-hidden transition-all ${expandido ? "w-42 ml-3" : "w-0"}`}>
+
+      < span className={`overflow-hidden transition-all ${expandido ? "w-42 ml-3" : "w-0"}`}>
         {texto}
-      </span>
+      </span >
 
       {!expandido && <div className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-[#1d4151bd] text-[#F7F7F7] text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>{texto}</div>}
-    </li>
+    </Link >
   )
 }
 

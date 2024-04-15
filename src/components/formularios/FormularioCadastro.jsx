@@ -18,16 +18,26 @@ const FormularioCadastro = () => {
 
   const cadastrarUsuario = async (e) => {
     e.preventDefault();
+    console.log("Fui clicado");
 
     try {
-      const cadastro = await Api.post("/api/criarUsuario", value);
 
-      if (cadastro.data.usuarioCriado) {
-        toast.success("Parabéns, seu usuário foi cadastrado com sucesso!");
-        navigate("/login")
+      if (value.senha !== value.senha_comparada) {
+        throw new Error("As senhas informadas devem ser exatamente iguais.");
+      } else if (value.senha === "" || value.senha_comparada === "") { 
+        throw new Error("As senhas devem estar preenchidas.");
+      } else{
+        const cadastro = await Api.post("/api/criarUsuario", value);
+
+        if (cadastro.data.usuarioCriado) {
+          toast.success("Parabéns, seu usuário foi cadastrado com sucesso!");
+          navigate("/login")
+        }
       }
+
     } catch (error) {
-      toast.error(error.response.status + ": " + error.response.data.msg);
+      toast.error(error.message);
+      toast.error(error.response.data.msg);
     }
   }
 
