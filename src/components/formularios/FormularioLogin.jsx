@@ -1,4 +1,4 @@
-﻿import { useContext, useState } from "react"
+﻿import { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { forms, formsButton, formsInput, formsLegend } from "../styles/EstilosDefault"
 import { AuthContext } from "../../contexts/UserContext/UserContext"
@@ -32,6 +32,11 @@ const FormularioLogin = () => {
       console.log(`Erro: ${error}`);
     }
   }
+
+  useEffect(() => {
+    const legend = document.querySelector("legend");
+    legend.style.backgroundImage = "url('assets/images/abelhas-login.jpg')";
+  })
 
   return (
     <form className={`${forms}`}>

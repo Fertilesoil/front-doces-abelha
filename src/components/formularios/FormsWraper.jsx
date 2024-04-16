@@ -8,8 +8,6 @@ const FormsWraper = ({ children, flex, borderLeft, borderRight }) => {
   useEffect(() => {
     const aside = document.querySelector(".imagem");
     aside.style.backgroundImage = "url('assets/images/abelhas-login.jpg')";
-
-    console.log(aside);
   });
 
   return (
