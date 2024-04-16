@@ -1,8 +1,9 @@
-﻿import { useState } from "react"
+﻿import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { formsButton, formsCadastro, formsInput, formsLegendCadastro } from "../styles/EstilosDefault"
 import { Api } from "../../services/Api"
 import toast from "react-hot-toast"
+import { injetarImagem } from "../../utils/Utilidades"
 
 const FormularioCadastro = () => {
 
@@ -40,6 +41,10 @@ const FormularioCadastro = () => {
       toast.error(error.response.data.msg);
     }
   }
+  
+  useEffect(() => {
+    injetarImagem("legend", "assets/images/abelhas-login.jpg");
+  });
 
   return (
     <form className={`${formsCadastro}`}>
