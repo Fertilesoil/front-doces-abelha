@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'login-image': "url('./src/assets/abelhas-login.jpg')",
-        'abelha-home': "url('./src/assets/abelha-home.jpg')"
+        'login-image': "url('src/assets/abelhas-login.jpg')",
+        'abelha-home': "url('src/assets/abelha-home.jpg')"
       },
       fontFamily: {
         ManRope: ["Manrope", "sans-serif"],
@@ -20,15 +20,3 @@ export default {
   },
   plugins: [],
 }
-
-
-// module.exports = {
-//   theme: {
-//     extend: {
-//       backgroundImage: {
-//         'hero-pattern': "url('/img/hero-pattern.svg')",
-//         'footer-texture': "url('/img/footer-texture.png')",
-//       }
-//     }
-//   }
-// }
