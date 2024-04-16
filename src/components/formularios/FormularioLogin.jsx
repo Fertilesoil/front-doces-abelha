@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { forms, formsButton, formsInput, formsLegend } from "../styles/EstilosDefault"
 import { AuthContext } from "../../contexts/UserContext/UserContext"
 import toast from "react-hot-toast"
+import { injetarImagem } from "../../utils/Utilidades"
 
 const FormularioLogin = () => {
 
@@ -20,7 +21,7 @@ const FormularioLogin = () => {
 
     try {
       const response = await loginApiCall(value);
-      
+
       if (response.response.data.msg === "Email ou senha inválidos") {
         toast.error(`Email ou senha inválidos`);
         navigate("/login", { replace: true });
@@ -34,8 +35,7 @@ const FormularioLogin = () => {
   }
 
   useEffect(() => {
-    const legend = document.querySelector("legend");
-    legend.style.backgroundImage = "url('assets/images/abelhas-login.jpg')";
+    injetarImagem("legend", "assets/images/abelhas-login.jpg");
   })
 
   return (

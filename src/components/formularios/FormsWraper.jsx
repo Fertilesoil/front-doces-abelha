@@ -1,13 +1,13 @@
 ﻿import { useEffect } from "react";
 import { formsWraperPropType } from "../../PropTypes/PropTypeValidation"
+import { injetarImagem } from "../../utils/Utilidades";
 
 
 const FormsWraper = ({ children, flex, borderLeft, borderRight }) => {
 
-  
+
   useEffect(() => {
-    const aside = document.querySelector(".imagem");
-    aside.style.backgroundImage = "url('assets/images/abelhas-login.jpg')";
+    injetarImagem(".imagem", "assets/images/abelhas-login.jpg");
   });
 
   return (

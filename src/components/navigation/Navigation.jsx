@@ -1,4 +1,4 @@
-﻿import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
+﻿import { SquareChevronLeft, SquareChevronRight } from "lucide-react";
 import { createContext, useContext, useState } from "react";
 import { childrenCollectionPropType, navbarPropType } from "../../PropTypes/PropTypeValidation";
 import Perfil from "./Perfil";
@@ -19,9 +19,9 @@ const Navigation = ({ children }) => {
           mr-2 ${expandido ? "px-2 py-2 text-xl w-50" : "px-0 py-0 w-0 mr-0 flex-none"} border-b`}>Doces Abelha</span>
 
           <button
-            className={`p-1.5 rounded-lg bg-gray-50 hover:bg-[#1D4151] text-[#1D4151] hover:text-[#F5F5F5] ${!expandido && " flex justify-center px-2 mr-1"}`}
+            className={`p-1.5 rounded-lg bg-gray-50 hover:bg-[#1D4151] text-[#1D4151] hover:text-[#F5F5F5] ${!expandido && " flex justify-center px-2 relative py-2 right-1"}`}
             onClick={() => setExpandido(anterior => !anterior)}>
-            {expandido ? <CircleChevronLeft size={25} /> : <CircleChevronRight size={25} />}
+            {expandido ? <SquareChevronLeft size={25} /> : <SquareChevronRight size={25} />}
           </button>
         </div>
 

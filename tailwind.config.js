@@ -7,10 +7,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'login-image': `url('public/assets/images/abelhas-login.jpg')`,
-        'abelha-home': `url('assets/images/abelha-home.jpg')`
-        // 'login-image': `url('https://i.imgur.com/agvgSWF.jpeg')`,
-        // 'abelha-home': `url('https://i.imgur.com/OG7B5Gy.jpeg')`
+        "abelha-home": "url('https://i.imgur.com/OG7B5Gy.jpeg')"
       },
       fontFamily: {
         ManRope: ["Manrope", "sans-serif"],
