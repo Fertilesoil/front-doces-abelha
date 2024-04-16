@@ -1,5 +1,5 @@
 ﻿{
-  "rewrites":  [
-    {"source": "/(.*)", "destination": "/login"}
+  "rewrites": [
+      { "source": "/((?!api/.*).*)", "destination": "/" }
   ]
 }
