@@ -35,7 +35,6 @@ const DefaultLayout = () => {
     <>
       <Navigation>
 
-        
         <NavbarItem to="/" icone={<Home size={25} />} texto="Home" />
 
         <NavbarItem to="/produtosVenda" icone={<Box size={25} />} texto="Produtos" />
