@@ -1,9 +1,12 @@
-﻿import { useEffect, useState } from "react"
+﻿import { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { formsButton, formsCadastro, formsInput, formsLegendCadastro } from "../styles/EstilosDefault"
 import { Api } from "../../services/Api"
 import toast from "react-hot-toast"
 import { injetarImagem } from "../../utils/Utilidades"
+import { AuthContext } from "../../contexts/UserContext/UserContext"
+import { tailspin } from "ldrs"
+tailspin.register("l-tailspin");
 
 const FormularioCadastro = () => {
 
@@ -15,22 +18,25 @@ const FormularioCadastro = () => {
     senha_comparada: ""
   })
 
+  const { loading, setLoading } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const cadastrarUsuario = async (e) => {
     e.preventDefault();
-    console.log("Fui clicado");
 
     try {
 
       if (value.senha !== value.senha_comparada) {
         throw new Error("As senhas informadas devem ser exatamente iguais.");
-      } else if (value.senha === "" || value.senha_comparada === "") { 
+      } else if (value.senha === "" || value.senha_comparada === "") {
+        setLoading(false);
         throw new Error("As senhas devem estar preenchidas.");
-      } else{
+      } else {
         const cadastro = await Api.post("/api/criarUsuario", value);
 
         if (cadastro.data.usuarioCriado) {
+          setLoading(false);
           toast.success("Parabéns, seu usuário foi cadastrado com sucesso!");
           navigate("/login")
         }
@@ -41,7 +47,7 @@ const FormularioCadastro = () => {
       toast.error(error.response.data.msg);
     }
   }
-  
+
   useEffect(() => {
     injetarImagem("legend", "assets/images/abelhas-login.jpg");
   });
@@ -102,10 +108,19 @@ const FormularioCadastro = () => {
       </label>
 
       <button
-        className={`${formsButton}`}
-        onClick={cadastrarUsuario}
+        className={`${formsButton} ${loading && 'bg-gradient-to-l from-[#8BBBC9] via-[#99d7eb] to-[#bedfe9] px-14 py-2.5'}`}
+        onClick={(e) => {
+          setLoading(true)
+          cadastrarUsuario(e);
+        }}
       >
-        Cadastrar
+        {loading ?
+          <l-tailspin
+            color="#ffffff"
+            size={21}
+            speed={.9}
+          />
+          : "Cadastrar"}
       </button>
 
       <span>

@@ -4,6 +4,8 @@ import { forms, formsButton, formsInput, formsLegend } from "../styles/EstilosDe
 import { AuthContext } from "../../contexts/UserContext/UserContext"
 import toast from "react-hot-toast"
 import { injetarImagem } from "../../utils/Utilidades"
+import { tailspin } from "ldrs"
+tailspin.register("l-tailspin");
 
 const FormularioLogin = () => {
 
@@ -12,7 +14,7 @@ const FormularioLogin = () => {
     senha: ""
   });
 
-  const { loginApiCall } = useContext(AuthContext);
+  const { loginApiCall, loading } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -67,10 +69,19 @@ const FormularioLogin = () => {
         </label>
 
         <button
-          className={`${formsButton}`}
+          className={`${formsButton} ${loading && 'bg-gradient-to-l from-[#8BBBC9] via-[#99d7eb] to-[#bedfe9]'}`}
           onClick={handleLogin}
         >
-          Entrar
+          {
+            loading ?
+              <l-tailspin
+                color="#ffffff"
+                size={21}
+                speed={.9}
+              />
+              : "Entrar"
+          }
+
         </button>
         <span>Não possui uma conta?
           <Link to="/cadastro" className="text-[#CE5A67] ml-2 font-[500]">
