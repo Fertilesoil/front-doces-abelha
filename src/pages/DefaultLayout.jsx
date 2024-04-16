@@ -24,7 +24,7 @@ const DefaultLayout = () => {
       if (deslogado === null) {
         toast.success("Deslogado com sucesso!");
         navigate("/login");
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (error) {
       console.log(`Erro: ${error}`);
