@@ -2,13 +2,13 @@
   "routes":  [
     {
       "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "/"
     }
   ],
   "rewrites": [
     {
       "source": "/((?!api/.*).*)",
-      "destination": "*"
+      "destination": "/"
     }
   ]
 }
