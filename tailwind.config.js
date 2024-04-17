@@ -1,5 +1,3 @@
-import abelhaHome from "./public/assets/images/abelha-home.jpg"
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -9,8 +7,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "abelha-home": `url(${abelhaHome})`
-        // "abelha-home": "url('https://i.imgur.com/OG7B5Gy.jpeg')"
+        "abelha-home": "url('https://i.imgur.com/OG7B5Gy.jpeg')"
       },
       fontFamily: {
         ManRope: ["Manrope", "sans-serif"],
