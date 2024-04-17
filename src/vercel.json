@@ -1,14 +1,12 @@
 ﻿{
-  "routes":  [
+  "routes": [
     {
-      "src": "/(.*)",
+      "src": "/",
       "dest": "/"
-    }
-  ],
-  "rewrites": [
+    },
     {
-      "source": "/((?!api/.*).*)",
-      "destination": "/"
+      "src": "/login",
+      "dest": "/"
     }
   ]
 }
