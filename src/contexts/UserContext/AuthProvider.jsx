@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const shared = {
+  let shared = {
     usuario,
     loginApiCall,
     manter,

@@ -23,7 +23,7 @@ const DefaultLayout = () => {
       const deslogado = await logoutApiCall();
       if (deslogado === null) {
         toast.success("Deslogado com sucesso!");
-        navigate("/login");
+        navigate("/login", { replace: true });
       }
     } catch (error) {
       console.log(`Erro: ${error}`);
