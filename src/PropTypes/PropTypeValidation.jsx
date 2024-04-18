@@ -27,5 +27,12 @@ export const perfilPropType = {
 
 export const cardRecheioPropType = {
   id: PropTypes.string,
-  nome: PropTypes.string
+  nome: PropTypes.string,
+  caminho: PropTypes.string
+}
+
+export const gridLoaderPropType = {
+  tamanho: PropTypes.number,
+  cor: PropTypes.string,
+  velocidade: PropTypes.number
 }

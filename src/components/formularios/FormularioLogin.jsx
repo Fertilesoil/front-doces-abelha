@@ -4,8 +4,7 @@ import { forms, formsButton, formsInput, formsLegend } from "../styles/EstilosDe
 import { AuthContext } from "../../contexts/UserContext/UserContext"
 import toast from "react-hot-toast"
 import { injetarImagem } from "../../utils/Utilidades"
-import { tailspin } from "ldrs"
-tailspin.register("l-tailspin");
+import { TailSpinLoader } from "../loaders/TailSpinLoader"
 
 const FormularioLogin = () => {
 
@@ -74,10 +73,10 @@ const FormularioLogin = () => {
         >
           {
             loading ?
-              <l-tailspin
-                color="#ffffff"
-                size={21}
-                speed={.9}
+              <TailSpinLoader
+                cor="#ffffff"
+                tamanho={21}
+                velocidade={.9}
               />
               : "Entrar"
           }

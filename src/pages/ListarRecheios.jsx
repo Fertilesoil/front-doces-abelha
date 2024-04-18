@@ -4,8 +4,7 @@ import CardRecheio from "../components/recheios/CardRecheio";
 import { Api } from "../services/Api";
 import toast from "react-hot-toast";
 import { AuthContext } from "../contexts/UserContext/UserContext";
-import { grid } from "ldrs"
-grid.register("l-grid");
+import GridLoader from "../components/loaders/GridLoader";
 
 const ListarRecheios = () => {
 
@@ -13,7 +12,6 @@ const ListarRecheios = () => {
 
   const { loading, setLoading } = useContext(AuthContext);
 
-  
   const listarRecheios = async () => {
     setLoading(true);
     try {
@@ -39,10 +37,10 @@ const ListarRecheios = () => {
       <div className="grid grid-cols-3 grid-rows-subgrid place-items-center gap-4">
         {loading ?
           <div className="flex items-center justify-center h-[80vh] w-[80vw] absolute right-40 bottom-12">
-            <l-grid
-              color="#EC4899"
-              size={270}
-              speed={1.1}
+            <GridLoader
+              cor="#EC4899"
+              tamanho={270}
+              velocidade={1.1}
             />
           </div>
           :
@@ -51,10 +49,10 @@ const ListarRecheios = () => {
               key={recheio.id}
               id={recheio.id}
               nome={recheio.nome}
+              caminho={`/recheios/editar/${recheio.id}`}
             />
           ))
         }
-
       </div>
 
     </section>
