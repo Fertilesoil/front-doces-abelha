@@ -24,3 +24,8 @@ export const navbarPropType = {
 export const perfilPropType = {
   props: PropTypes.bool
 }
+
+export const cardRecheioPropType = {
+  id: PropTypes.string,
+  nome: PropTypes.string
+}

@@ -41,7 +41,7 @@ const DefaultLayout = () => {
 
         <NavbarItem to="/" icone={<PackageSearch size={25} />} texto="Estoque" />
 
-        <NavbarItem to="/" icone={<ChefHat size={25} />} texto="Recheios" />
+        <NavbarItem to="/recheios" icone={<ChefHat size={25} />} texto="Recheios" />
 
         <NavbarItem to="/" icone={<BarChartBig size={25} />} texto="Vendas" />
 
