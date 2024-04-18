@@ -40,7 +40,7 @@ const ListarRecheios = () => {
         {loading ?
           <div className="flex items-center justify-center h-[80vh] w-[80vw] absolute right-40 bottom-12">
             <l-grid
-              color="#D988B9"
+              color="#EC4899"
               size={270}
               speed={1.1}
             />
