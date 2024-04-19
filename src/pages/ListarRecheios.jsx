@@ -1,35 +1,25 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import CardRecheio from "../components/recheios/CardRecheio";
-import { Api } from "../services/Api";
-import toast from "react-hot-toast";
-import { AuthContext } from "../contexts/UserContext/UserContext";
 import GridLoader from "../components/loaders/GridLoader";
+import { RecheioContext } from "../contexts/RecheioContext/RecheioContext";
 
 const ListarRecheios = () => {
 
-  const [recheios, setRecheios] = useState([]);
-
-  const { loading, setLoading } = useContext(AuthContext);
-
-  const listarRecheios = async () => {
-    setLoading(true);
-    try {
-      const recheiosListados = await Api.get("/api/listarRecheios");
-
-      setRecheios(recheiosListados.data);
-      setLoading(false);
-      toast.success("Recheios listados com sucesso");
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
-      toast.error(error.response.data.msg);
-    }
-  }
+  const { recheios, listarRecheios, loading, setAtivoListar } = useContext(RecheioContext);
 
   useEffect(() => {
-    listarRecheios();
+    setAtivoListar(true);
+    return () => {
+      setAtivoListar(false);
+    }
   }, [])
+
+  useEffect(() => {
+    if (recheios.length === 0) {
+      listarRecheios();
+    }
+  }, [recheios])
 
   return (
     <section className="my-4">

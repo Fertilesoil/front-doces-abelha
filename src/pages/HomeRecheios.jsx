@@ -1,37 +1,36 @@
-﻿import { NavLink, Outlet } from "react-router-dom"
+﻿import { Link, Outlet } from "react-router-dom"
+import { RecheioContext } from "../contexts/RecheioContext/RecheioContext";
+import { useContext } from "react";
 
 const HomeRecheios = () => {
+
+  const { ativoCadastrar, ativoEditar, ativoListar } = useContext(RecheioContext);
+
   return (
     <>
       <header className="ml-16 flex items-center border-b h-14 shadow-sm px-10">
 
         <nav className="flex-1 flex justify-evenly">
-          <NavLink
+          <Link
             to="cadastro"
-            className={({ isActive }) => {
-              return isActive ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500]"
-            }}
+            className={`${ativoCadastrar ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center transition-all" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500] flex items-center"}`}
           >
             <span className="font-[600] tracking-wide">Cadastrar</span>
-          </NavLink>
+          </Link>
 
-          <NavLink
+          <Link
             to="listar"
-            className={({ isActive }) => {
-              return isActive ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500]"
-            }}
+            className={`${ativoListar ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center transition-all" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500] flex items-center"}`}
           >
             <span className="font-[600] tracking-wide">Recheios</span>
-          </NavLink>
+          </Link>
 
-          <NavLink
+          <Link
             to="editar/:id"
-            className={({ isActive }) => {
-              return isActive ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500]"
-            }}
+            className={`${ativoEditar ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center transition-all" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500] flex items-center"}`}
           >
             <span className="font-[600] tracking-wide">Editar</span>
-          </NavLink>
+          </Link>
         </nav>
 
         <h2 className="px-2 text-2xl text-[#1d4151] font-SpecialElite font-[700]">Recheios</h2>

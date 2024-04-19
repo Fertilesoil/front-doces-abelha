@@ -4,7 +4,7 @@ import { childrenCollectionPropType, navbarPropType } from "../../PropTypes/Prop
 import Perfil from "./Perfil";
 import { Link } from "react-router-dom";
 
-const NavbarContext = createContext({});
+export const NavbarContext = createContext({});
 
 const Navigation = ({ children }) => {
 
@@ -39,13 +39,12 @@ const Navigation = ({ children }) => {
     </aside>
   )
 }
-
 export function NavbarItem({ icone, texto, to, funcao }) {
   const { expandido } = useContext(NavbarContext);
 
   return (
     <Link className={
-      `relative flex items-center py-2 ${expandido ? "px-3" : "px-2"} my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-[#1D4151] hover:text-[#F7F7F7] text-[#1D4151] `}
+      `relative flex items-center py-2 ${expandido ? "px-3" : "px-2"} my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-[#1D4151] hover:text-[#F7F7F7] text-[#1D4151]`}
       to={to}
       onClick={funcao}
     >

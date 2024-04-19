@@ -1,4 +1,5 @@
-﻿/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,6 +8,7 @@ import { AuthContext } from "../../contexts/UserContext/UserContext";
 import GridLoader from "../loaders/GridLoader";
 import { Trash2 } from "lucide-react";
 import { TailSpinLoader } from "../loaders/TailSpinLoader";
+import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
 
 const EditarRecheio = () => {
 
@@ -19,6 +21,7 @@ const EditarRecheio = () => {
   });
 
   const { loading, setLoading } = useContext(AuthContext);
+  const { setAtivoEditar, atualizarRecheios } = useContext(RecheioContext);
 
   const [loadAtualizar, setLoadAtualizar] = useState(false);
   const [loadExcluir, setLoadExcluir] = useState(false);
@@ -45,6 +48,8 @@ const EditarRecheio = () => {
     try {
       const recheioNovo = await Api.put(`/api/atualizarRecheio/${id}`, recheioAtualizado);
 
+      await atualizarRecheios();
+
       setLoadAtualizar(false);
       toast.success("Recheio atualizado com sucesso!");
       navigate("/recheios/listar");
@@ -59,7 +64,9 @@ const EditarRecheio = () => {
     setLoadExcluir(true);
     try {
       const recheioDeletado = await Api.delete(`/api/deletarRecheio/${id}`);
-  
+
+      await atualizarRecheios();
+
       toast.success("Recheio deletado com sucesso!");
       navigate("/recheios/listar");
     } catch (error) {
@@ -73,6 +80,13 @@ const EditarRecheio = () => {
       navigate("/recheios");
     } else {
       buscarRecheioPorId();
+    }
+  }, []);
+
+  useEffect(() => {
+    setAtivoEditar(true);
+    return () => {
+      setAtivoEditar(false);
     }
   }, []);
 
@@ -112,7 +126,7 @@ const EditarRecheio = () => {
             <div className="w-[80%] flex justify-around items-center text-white rounded-sm ">
               <button
                 className={`w-[30%] bg-pink-300 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center ${loadExcluir && "py-2"}`}
-              onClick={deletarRecheio}
+                onClick={deletarRecheio}
               >
                 {
                   loadExcluir ?

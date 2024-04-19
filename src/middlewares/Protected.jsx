@@ -11,12 +11,11 @@ const Protected = ({ children }) => {
 
   useEffect(() => {
     if (usuario === null) {
-      // toast.error("Faça o login para acessar esta página");
       navigate("/login", { replace: true });
     }
-  }, [usuario, navigate]);
+  }, []);
 
-  return usuario?.perfil ? children : null;
+  return usuario?.perfil && children;
 }
 
 Protected.propTypes = childrenPropType;

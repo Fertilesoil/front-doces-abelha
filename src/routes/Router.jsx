@@ -31,11 +31,13 @@ export const router = createBrowserRouter(
                     <Route path="cardProdutos" element={<Protected> <CardProdutoVenda /> </Protected>} />
                 </Route>
 
-                    <Route path="/recheios" element={<Protected> <HomeRecheios /> </Protected>}>
+                <Route path="/recheios" element={<Protected> <RecheioProvider /> </Protected>} >
+                    <Route path="" element={<Protected> <HomeRecheios /> </Protected>}>
                         <Route path="cadastro" element={<Protected> <FormularioRecheio /> </Protected>} />
                         <Route path="listar" element={<Protected> <ListarRecheios /> </Protected>} />
                         <Route path="editar/:id" element={<Protected> <EditarRecheio /> </Protected>} />
                     </Route>
+                </Route>
 
             </Route>
 
