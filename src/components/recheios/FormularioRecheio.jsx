@@ -1,4 +1,6 @@
 ﻿/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Api } from "../../services/Api";
@@ -29,7 +31,7 @@ const FormularioRecheio = () => {
 
       setLoading(false);
       toast.success("Recheio cadastrado com sucesso!");
-      navigate("/recheios");
+      navigate("/recheios/listar");
     } catch (error) {
       setLoading(false);
       toast.error(error.message);
@@ -54,6 +56,7 @@ const FormularioRecheio = () => {
         >
           Qual o nome do recheio que você gostaria de cadastrar?
         </legend>
+
         <input
           type="text"
           className="border-2 p-[.5rem] w-[80%] focus:ring focus:ring-pink-300 text-slate-700 font-[500] rounded-sm"

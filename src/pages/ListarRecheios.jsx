@@ -1,7 +1,7 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
 import CardRecheio from "../components/recheios/CardRecheio";
-import GridLoader from "../components/loaders/GridLoader";
+import SpiralLoader from "../components/loaders/SpiralLoader";
 import { RecheioContext } from "../contexts/RecheioContext/RecheioContext";
 
 const ListarRecheios = () => {
@@ -27,9 +27,9 @@ const ListarRecheios = () => {
       <div className="grid grid-cols-3 grid-rows-subgrid place-items-center gap-4">
         {loading ?
           <div className="flex items-center justify-center h-[80vh] w-[80vw] absolute right-40 bottom-12">
-            <GridLoader
+            <SpiralLoader
               cor="#EC4899"
-              tamanho={270}
+              tamanho={200}
               velocidade={1.1}
             />
           </div>

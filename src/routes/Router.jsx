@@ -9,13 +9,15 @@ import Cadastro from "../pages/Cadastro";
 import HomePage from "../pages/HomePage";
 import Protected from "../middlewares/Protected";
 import DefaultLayout from "../pages/DefaultLayout";
-import CardProdutoVenda from "../components/produtosVenda/CardProdutoVenda";
 import HomeProdutos from "../pages/HomeProdutos";
 import HomeRecheios from "../pages/HomeRecheios";
 import FormularioRecheio from "../components/recheios/FormularioRecheio";
 import ListarRecheios from "../pages/ListarRecheios";
 import EditarRecheio from "../components/recheios/EditarRecheio";
 import { RecheioProvider } from "../contexts/RecheioContext/RecheioProvider";
+import { ProdutoVendaProvider } from "../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaProvider";
+import FormularioProdutoVenda from "../components/produtosVenda/FormularioProdutoVenda";
+import ListarProdutosVenda from "../pages/ListarProdutosVenda";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -27,8 +29,11 @@ export const router = createBrowserRouter(
 
                 <Route path="/" index element={<Protected> <HomePage /> </Protected>} />
 
-                <Route path="/produtosVenda" element={<Protected> <HomeProdutos /> </Protected>} >
-                    <Route path="cardProdutos" element={<Protected> <CardProdutoVenda /> </Protected>} />
+                <Route path="/produtosVenda" element={<Protected> <ProdutoVendaProvider /> </Protected>} >
+                    <Route path="" element={<Protected> <HomeProdutos /> </Protected>} >
+                        <Route path="produtos" element={<Protected> <ListarProdutosVenda /> </Protected>} />
+                        <Route path="cadastrar" element={<Protected> <FormularioProdutoVenda /> </Protected>} />
+                    </Route>
                 </Route>
 
                 <Route path="/recheios" element={<Protected> <RecheioProvider /> </Protected>} >

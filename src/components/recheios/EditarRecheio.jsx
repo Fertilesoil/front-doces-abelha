@@ -1,47 +1,33 @@
 ﻿/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
-import { Api } from "../../services/Api";
-import { AuthContext } from "../../contexts/UserContext/UserContext";
-import GridLoader from "../loaders/GridLoader";
+import { useParams } from "react-router-dom";
+import SpiralLoader from "../loaders/SpiralLoader";
 import { Trash2 } from "lucide-react";
 import { TailSpinLoader } from "../loaders/TailSpinLoader";
 import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
+import { Api } from "../../services/Api";
+import toast from "react-hot-toast";
 
 const EditarRecheio = () => {
 
   const { id } = useParams();
 
-  const [recheio, setRecheio] = useState({});
-
   const [recheioAtualizado, setRecheioAtualizado] = useState({
     nome: ""
   });
 
-  const { loading, setLoading } = useContext(AuthContext);
-  const { setAtivoEditar, atualizarRecheios } = useContext(RecheioContext);
-
-  const [loadAtualizar, setLoadAtualizar] = useState(false);
-  const [loadExcluir, setLoadExcluir] = useState(false);
-
-  const navigate = useNavigate();
-
-  const buscarRecheioPorId = async () => {
-    setLoading(true);
-    try {
-      const recheioEncontrado = await Api.get(`/api/acharRecheio/${id}`);
-
-      toast.success(`Recheio encontrado: ${recheioEncontrado.data.nome}`);
-      setLoading(false);
-      setRecheio(recheioEncontrado.data);
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
-      console.log(error.message);
-    }
-  }
+  const {
+    setAtivoEditar,
+    recheio,
+    buscarRecheioPorId,
+    loadAtualizar,
+    setLoadAtualizar,
+    atualizarRecheios,
+    loadExcluir,
+    setLoadExcluir,
+    navigate,
+    loading } = useContext(RecheioContext);
 
   const atualizarRecheio = async () => {
     setLoadAtualizar(true);
@@ -79,7 +65,7 @@ const EditarRecheio = () => {
     if (id === ":id") {
       navigate("/recheios");
     } else {
-      buscarRecheioPorId();
+      buscarRecheioPorId(id);
     }
   }, []);
 
@@ -96,9 +82,9 @@ const EditarRecheio = () => {
       <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope  focus-within:ring-pink-400">
 
         {loading ?
-          <GridLoader
+          <SpiralLoader
             cor="#EC4899"
-            tamanho={100}
+            tamanho={80}
             velocidade={1}
           /> :
           <>

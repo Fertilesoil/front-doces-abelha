@@ -36,3 +36,7 @@ export const gridLoaderPropType = {
   cor: PropTypes.string,
   velocidade: PropTypes.number
 }
+
+export const produtoVendaPropType = {
+  produtos: PropTypes.array
+}

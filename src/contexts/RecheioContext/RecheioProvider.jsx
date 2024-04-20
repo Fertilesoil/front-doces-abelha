@@ -1,16 +1,21 @@
 ﻿import { useState } from "react";
 import { childrenPropType } from "../../PropTypes/PropTypeValidation"
 import { RecheioContext } from "./RecheioContext";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Api } from "../../services/Api";
 
 
 export const RecheioProvider = ({ children }) => {
 
+  const navigate = useNavigate();
+
   const [recheios, setRecheios] = useState([]);
+  const [recheio, setRecheio] = useState({});
 
   const [loading, setLoading] = useState(false);
+  const [loadAtualizar, setLoadAtualizar] = useState(false);
+  const [loadExcluir, setLoadExcluir] = useState(false);
 
   const [ativoCadastrar, setAtivoCadastrar] = useState(false);
   const [ativoListar, setAtivoListar] = useState(false);
@@ -43,6 +48,21 @@ export const RecheioProvider = ({ children }) => {
     }
   }
 
+  const buscarRecheioPorId = async (id) => {
+    setLoading(true);
+    try {
+      const recheioEncontrado = await Api.get(`/api/acharRecheio/${id}`);
+
+      toast.success(`Recheio encontrado: ${recheioEncontrado.data.nome}`);
+      setLoading(false);
+      setRecheio(recheioEncontrado.data);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message);
+      console.log(error.message);
+    }
+  }
+
   let shared = {
     recheios,
     setRecheios,
@@ -54,7 +74,15 @@ export const RecheioProvider = ({ children }) => {
     setAtivoListar,
     ativoEditar,
     setAtivoEditar,
-    atualizarRecheios
+    atualizarRecheios,
+    recheio,
+    setRecheio,
+    buscarRecheioPorId,
+    loadAtualizar,
+    setLoadAtualizar,
+    loadExcluir,
+    setLoadExcluir,
+    navigate
   }
 
   return (
