@@ -3,20 +3,50 @@
 import { useContext, useEffect, useState } from "react"
 import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
 import { Trash2 } from "lucide-react";
-import { Api } from "../../services/Api";
-import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import SpiralLoader from "../loaders/SpiralLoader";
 import { TailSpinLoader } from "../loaders/TailSpinLoader";
+import toast from "react-hot-toast";
+import { Api } from "../../services/Api";
+import { atualizarRecheioEdicao } from "../../utils/Utilidades";
 
 
 const CardEditavelProdutoVenda = () => {
+
+  const {
+    setAtivoEditar,
+    recheios,
+    produto,
+    ativoBotaoEditar,
+    ativoBotaoExcluir,
+    loadProduto,
+    listarRecheios,
+    atualizarProduto,
+    deletarProduto,
+    setLoadProduto,
+    setProduto } = useContext(ProdutoVendaContext);
 
   const { id } = useParams();
 
   const navigate = useNavigate();
 
   const [produtoAtualizado, setProdutoAtualizado] = useState(null);
+
+  const buscarProduto = async () => {
+    setLoadProduto(true);
+    try {
+      const produtoAchado = await Api.get(`/api/listarProdutosVenda/${id}`);
+
+      setProduto(produtoAchado.data);
+      const { recheio, id: id_objeto, ...novoObjeto } = produtoAchado.data;
+      setProdutoAtualizado(novoObjeto);
+      setLoadProduto(false);
+      toast.success(`Produto encontrado com sucesso!`);
+    } catch (error) {
+      setLoadProduto(false);
+      toast.error(error.message);
+    }
+  }
 
   const guardarValores = (e) => {
     let nome = e.target.name;
@@ -28,107 +58,22 @@ const CardEditavelProdutoVenda = () => {
     })
   }
 
-  const {
-    setAtivoEditar,
-    recheios,
-    setRecheios,
-    loading,
-    setLoading,
-    produto,
-    setProduto,
-    ativoBotaoEditar,
-    setAtivoBotaoEditar,
-    ativoBotaoExcluir,
-    setAtivoBotaoExcluir } = useContext(ProdutoVendaContext);
-
-  const buscarProduto = async () => {
-    setLoading(true);
-    try {
-      const produtoAchado = await Api.get(`/api/listarProdutosVenda/${id}`);
-
-      setProduto(produtoAchado.data);
-      const { recheio, id: id_objeto, ...novoObjeto } = produtoAchado.data;
-      setProdutoAtualizado(novoObjeto);
-      setLoading(false);
-      toast.success(`Produto encontrado com sucesso!`);
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
-    }
-  }
-
-  const listarRecheios = async () => {
-    try {
-      const recheiosListados = await Api.get("/api/listarRecheios");
-
-      setRecheios(recheiosListados.data);
-      toast.success("Recheios prontos para seleção");
-    } catch (error) {
-      toast.error(error.message);
-      toast.error(error.response.data.msg);
-    }
-  }
-
-  const atualizarProduto = async (e) => {
-    e.preventDefault();
-    setAtivoBotaoEditar(true);
-    try {
-
-      if (produtoAtualizado.preco)
-        produtoAtualizado.preco = Number(produtoAtualizado.preco);
-
-      if (produtoAtualizado.quantidade)
-        produtoAtualizado.quantidade = Number(produtoAtualizado.quantidade);
-
-      if (produtoAtualizado.peso)
-        produtoAtualizado.peso = Number(produtoAtualizado.peso);
-
-      const atualizado = await Api.put(`/api/atualizarProdutoVenda/${id}`, produtoAtualizado);
-
-      setAtivoBotaoEditar(false);
-      toast.success("Produto atualizado com sucesso!");
-      navigate("/produtosVenda/produtos");
-    } catch (error) {
-      setAtivoBotaoEditar(false);
-      toast.error(error.response.data.msg);
-      toast.error(error.message);
-    }
-  }
-
-  const deletarProduto = async (e) => {
-    e.preventDefault();
-    setAtivoBotaoExcluir(true);
-    try {
-      const excluido = await Api.delete(`/api/deletarProdutoVenda/${id}`);
-
-      setAtivoBotaoExcluir(false);
-      toast.success("Produto excluído com sucesso!");
-      navigate("/produtosVenda/produtos");
-    } catch (error) {
-      setAtivoBotaoExcluir(false);
-      toast.error(error.message);
-      toast.error(error.response.data.msg);
-    }
-  }
-
-  console.log(produtoAtualizado);
-
   useEffect(() => {
     if (id === ":id") {
-      navigate("produtosVenda/produtos");
+      navigate("/produtosVenda");
     }
+
+    setAtivoEditar(true);
+
     if (recheios.length === 0) {
       listarRecheios();
     }
-  }, []);
 
-  useEffect(() => {
-    setAtivoEditar(true);
     buscarProduto();
     return () => {
       setAtivoEditar(false);
     }
-  }, []);
+  }, [id, recheios.length]);
 
   return (
     <section className="h-[80vh] flex justify-center items-center">
@@ -137,7 +82,7 @@ const CardEditavelProdutoVenda = () => {
         className="ring-4 ring-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[50%] h-[70%] p-4 flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all text-slate-600 hover:scale-105">
 
         {
-          loading ?
+          loadProduto ?
             <SpiralLoader
               cor={`#14B8A6`}
               tamanho={150}
@@ -158,19 +103,11 @@ const CardEditavelProdutoVenda = () => {
                   type="text"
                   className=" font-bold text-xl leading-3 text-center flex-1 shrink-0 ring-2 ring-teal-300"
                 />
-
-
-                {/* <Link
-        to={`/produtosVenda/editar/${produto.id}`}
-        className="text-[#F7F7F7] ring-1 ring-teal-300 bg-teal-300 rounded-sm py-1 px-2 hover:scale-110 transition-all">
-        <FilePenLine size={20} strokeWidth={2.5} />
-      </Link> */}
               </div>
 
               <input
                 name="descricao"
                 onChange={guardarValores}
-                // value={produto?.descricao}
                 type="text"
                 placeholder={`${produto?.descricao}`}
                 className="text-sm text-balance text-center bg-teal-100 w-full rounded-md font-[500] leading-5 p-1"
@@ -216,13 +153,7 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Atual Recheio: {produto?.recheio?.nome}</h6>
 
                   <select
-                    onChange={async (e) => {
-                      let nome = e.target.value
-                      let recheio = await recheios.find(recheio => recheio.nome === nome)
-                      setProdutoAtualizado({
-                        ...produtoAtualizado, recheio_id: recheio.id
-                      })
-                    }}
+                    onChange={(e) => atualizarRecheioEdicao(e, recheios, setProdutoAtualizado, produtoAtualizado)}
                   >
 
                     <option disabled selected>
@@ -245,8 +176,10 @@ const CardEditavelProdutoVenda = () => {
 
               <div className="w-[80%] flex justify-around items-center text-white rounded-sm ">
                 <button
-                  onClick={deletarProduto}
-                  className={`w-[30%] bg-teal-300 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center`}
+                  onClick={(e) => {
+                    deletarProduto(e, id);
+                  }}
+                  className={`w-[30%] bg-teal-300 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center ${ativoBotaoExcluir && "py-2"}`}
                 >
                   {
                     ativoBotaoExcluir ?
@@ -264,8 +197,10 @@ const CardEditavelProdutoVenda = () => {
                 </button>
 
                 <button
-                  onClick={atualizarProduto}
-                  className={`flex items-center justify-center w-[30%] bg-teal-300 font-[600] hover:scale-105 transition-all rounded-[.3rem] py-1.5`}
+                  onClick={(e) => {
+                    atualizarProduto(e, id, produtoAtualizado);
+                  }}
+                  className={`flex items-center justify-center w-[30%] bg-teal-300 font-[600] hover:scale-105 transition-all rounded-[.3rem] py-1.5 ${ativoBotaoEditar && "py-2"}`}
                 >
                   {
                     ativoBotaoEditar ?

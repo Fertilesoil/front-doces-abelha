@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+﻿/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { childrenPropType } from "../../PropTypes/PropTypeValidation"
 import { RecheioContext } from "./RecheioContext";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -27,7 +28,7 @@ export const RecheioProvider = ({ children }) => {
       const recheiosListados = await Api.get("/api/listarRecheios");
       
       setLoading(false);
-      setRecheios(recheiosListados.data);
+      setRecheios(recheiosListados.data.reverse());
     } catch (error) {
       return error;
     }
@@ -37,8 +38,8 @@ export const RecheioProvider = ({ children }) => {
     setLoading(true);
     try {
       const recheiosListados = await Api.get("/api/listarRecheios");
-
-      setRecheios(recheiosListados.data);
+      // recheiosListados.data.reverse();
+      setRecheios(recheiosListados.data.reverse());
       setLoading(false);
       toast.success("Recheios listados com sucesso");
     } catch (error) {
@@ -63,6 +64,39 @@ export const RecheioProvider = ({ children }) => {
     }
   }
 
+  
+  const atualizarRecheio = async (id, recheioAtualizado) => {
+    setLoadAtualizar(true);
+    try {
+      const recheioNovo = await Api.put(`/api/atualizarRecheio/${id}`, recheioAtualizado);
+
+      await atualizarRecheios();
+
+      setLoadAtualizar(false);
+      toast.success("Recheio atualizado com sucesso!");
+      navigate("/recheios/listar");
+    } catch (error) {
+      setLoadAtualizar(false);
+      toast.error(error.response.data.msg);
+      toast.error(error.message);
+    }
+  }
+
+  const deletarRecheio = async (id) => {
+    setLoadExcluir(true);
+    try {
+      const recheioDeletado = await Api.delete(`/api/deletarRecheio/${id}`);
+
+      await atualizarRecheios();
+
+      toast.success("Recheio deletado com sucesso!");
+      navigate("/recheios/listar");
+    } catch (error) {
+      toast.error(error.response.data.msg);
+      toast.error(error.message);
+    }
+  }
+
   let shared = {
     recheios,
     setRecheios,
@@ -82,7 +116,9 @@ export const RecheioProvider = ({ children }) => {
     setLoadAtualizar,
     loadExcluir,
     setLoadExcluir,
-    navigate
+    navigate,
+    atualizarRecheio,
+    deletarRecheio
   }
 
   return (

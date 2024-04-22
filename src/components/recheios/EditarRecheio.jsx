@@ -1,5 +1,4 @@
 ﻿/* eslint-disable no-unused-vars */
-
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -7,8 +6,6 @@ import SpiralLoader from "../loaders/SpiralLoader";
 import { Trash2 } from "lucide-react";
 import { TailSpinLoader } from "../loaders/TailSpinLoader";
 import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
-import { Api } from "../../services/Api";
-import toast from "react-hot-toast";
 
 const EditarRecheio = () => {
 
@@ -23,44 +20,11 @@ const EditarRecheio = () => {
     recheio,
     buscarRecheioPorId,
     loadAtualizar,
-    setLoadAtualizar,
-    atualizarRecheios,
     loadExcluir,
-    setLoadExcluir,
     navigate,
-    loading } = useContext(RecheioContext);
-
-  const atualizarRecheio = async () => {
-    setLoadAtualizar(true);
-    try {
-      const recheioNovo = await Api.put(`/api/atualizarRecheio/${id}`, recheioAtualizado);
-
-      await atualizarRecheios();
-
-      setLoadAtualizar(false);
-      toast.success("Recheio atualizado com sucesso!");
-      navigate("/recheios/listar");
-    } catch (error) {
-      setLoadAtualizar(false);
-      toast.error(error.response.data.msg);
-      toast.error(error.message);
-    }
-  }
-
-  const deletarRecheio = async () => {
-    setLoadExcluir(true);
-    try {
-      const recheioDeletado = await Api.delete(`/api/deletarRecheio/${id}`);
-
-      await atualizarRecheios();
-
-      toast.success("Recheio deletado com sucesso!");
-      navigate("/recheios/listar");
-    } catch (error) {
-      toast.error(error.response.data.msg);
-      toast.error(error.message);
-    }
-  }
+    loading,
+    atualizarRecheio,
+    deletarRecheio } = useContext(RecheioContext);
 
   useEffect(() => {
     if (id === ":id") {
@@ -68,7 +32,7 @@ const EditarRecheio = () => {
     } else {
       buscarRecheioPorId(id);
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setAtivoEditar(true);
@@ -113,7 +77,9 @@ const EditarRecheio = () => {
             <div className="w-[80%] flex justify-around items-center text-white rounded-sm ">
               <button
                 className={`w-[30%] bg-pink-300 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center ${loadExcluir && "py-2"}`}
-                onClick={deletarRecheio}
+                onClick={() => {
+                  deletarRecheio(id);
+                }}
               >
                 {
                   loadExcluir ?
@@ -133,7 +99,9 @@ const EditarRecheio = () => {
 
               <button
                 className={`flex items-center justify-center w-[30%] bg-pink-300 font-[600] hover:scale-105 transition-all rounded-[.3rem] py-1.5 ${loadAtualizar && "py-2"}`}
-                onClick={atualizarRecheio}
+                onClick={() => {
+                  atualizarRecheio(id, recheioAtualizado);
+                }}
               >
                 {
                   loadAtualizar ?

@@ -1,6 +1,7 @@
-﻿import { Link, Outlet } from "react-router-dom"
+﻿import { Outlet } from "react-router-dom"
 import { RecheioContext } from "../contexts/RecheioContext/RecheioContext";
 import { useContext } from "react";
+import BotaoLinkRecheios from "../components/botoes/BotaoLinkRecheios";
 
 const HomeRecheios = () => {
 
@@ -11,26 +12,23 @@ const HomeRecheios = () => {
       <header className="ml-16 flex items-center border-b h-14 shadow-sm px-10">
 
         <nav className="flex-1 flex justify-evenly">
-          <Link
-            to="cadastro"
-            className={`${ativoCadastrar ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center transition-all" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500] flex items-center"}`}
-          >
-            <span className="font-[600] tracking-wide">Cadastrar</span>
-          </Link>
+          <BotaoLinkRecheios
+            caminho={`cadastro`}
+            loading={ativoCadastrar}
+            titulo={`Cadastrar`}
+          />
 
-          <Link
-            to="listar"
-            className={`${ativoListar ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center transition-all" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500] flex items-center"}`}
-          >
-            <span className="font-[600] tracking-wide">Recheios</span>
-          </Link>
+          <BotaoLinkRecheios
+            caminho={`listar`}
+            loading={ativoListar}
+            titulo={`Recheios`}
+          />
 
-          <Link
-            to="editar/:id"
-            className={`${ativoEditar ? "px-3 py-2 bg-pink-500 text-white rounded-md font-[500] flex items-center transition-all" : "px-3 py-2 bg-[#1d4151] hover:text-[#1d4151] hover:bg-white hover:border-[#1d4151] border-2 transition-all text-white rounded-md font-[500] flex items-center"}`}
-          >
-            <span className="font-[600] tracking-wide">Editar</span>
-          </Link>
+          <BotaoLinkRecheios
+            caminho={`editar/:id`}
+            loading={ativoEditar}
+            titulo={`Editar`}
+          />
         </nav>
 
         <h2 className="px-2 text-2xl text-[#1d4151] font-SpecialElite font-[700]">Recheios</h2>

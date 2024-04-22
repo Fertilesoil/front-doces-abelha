@@ -40,3 +40,9 @@ export const gridLoaderPropType = {
 export const produtoVendaPropType = {
   produtos: PropTypes.array
 }
+
+export const botaoLinkPropType = {
+  caminho: PropTypes.string,
+  loading: PropTypes.bool,
+  titulo: PropTypes.string
+}

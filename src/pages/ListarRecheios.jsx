@@ -10,23 +10,22 @@ const ListarRecheios = () => {
 
   useEffect(() => {
     setAtivoListar(true);
-    return () => {
-      setAtivoListar(false);
-    }
-  }, [])
 
-  useEffect(() => {
     if (recheios.length === 0) {
       listarRecheios();
     }
-  }, [recheios])
+
+    return () => {
+      setAtivoListar(false);
+    }
+  }, [recheios.length])
 
   return (
     <section className="my-4">
 
       <div className="grid grid-cols-3 grid-rows-subgrid place-items-center gap-4">
         {loading ?
-          <div className="flex items-center justify-center h-[80vh] w-[80vw] absolute right-40 bottom-12">
+          <div className="flex items-center justify-center h-[80vh] w-[80vw] absolute right-40 bottom-12 -z-10">
             <SpiralLoader
               cor="#EC4899"
               tamanho={200}
