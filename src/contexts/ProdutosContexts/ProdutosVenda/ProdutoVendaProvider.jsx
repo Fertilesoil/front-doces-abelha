@@ -9,6 +9,8 @@ export const ProdutoVendaProvider = ({ children }) => {
   const [ativoCard, setAtivoCard] = useState(false);
   const [ativoCadastrar, setAtivoCadastrar] = useState(false);
   const [ativoEditar, setAtivoEditar] = useState(false);
+  const [ativoBotaoEditar, setAtivoBotaoEditar] = useState(false)
+  const [ativoBotaoExcluir, setAtivoBotaoExcluir] = useState(false)
 
   const [loading, setLoading] = useState(false);
 
@@ -31,7 +33,11 @@ export const ProdutoVendaProvider = ({ children }) => {
     ativoEditar,
     setAtivoEditar,
     produto,
-    setProduto
+    setProduto,
+    ativoBotaoEditar,
+    setAtivoBotaoEditar,
+    ativoBotaoExcluir,
+    setAtivoBotaoExcluir
   }
 
   return (
