@@ -21,7 +21,7 @@ const CardRecheio = ({ id, nome, caminho }) => {
       </h2>
 
       <Link
-        className="w-[10%] flex justify-center text-white ring-1 ring-pink-300 bg-pink-300 rounded-sm py-1 cursor-pointer hover:scale-110 transition-all"
+        className="w-[10%] flex justify-center text-[#F7F7F7] ring-1 ring-pink-300 bg-pink-300 rounded-sm py-1 cursor-pointer hover:scale-110 transition-all"
         to={`${caminho}`}
       >
         <FilePenLine size={20} strokeWidth={2.5} />

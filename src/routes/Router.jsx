@@ -18,6 +18,7 @@ import { RecheioProvider } from "../contexts/RecheioContext/RecheioProvider";
 import { ProdutoVendaProvider } from "../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaProvider";
 import FormularioProdutoVenda from "../components/produtosVenda/FormularioProdutoVenda";
 import ListarProdutosVenda from "../pages/ListarProdutosVenda";
+import CardEditavelProdutoVenda from "../components/produtosVenda/CardEditavelProdutoVenda";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -31,8 +32,9 @@ export const router = createBrowserRouter(
 
                 <Route path="/produtosVenda" element={<Protected> <ProdutoVendaProvider /> </Protected>} >
                     <Route path="" element={<Protected> <HomeProdutos /> </Protected>} >
-                        <Route path="produtos" element={<Protected> <ListarProdutosVenda /> </Protected>} />
                         <Route path="cadastrar" element={<Protected> <FormularioProdutoVenda /> </Protected>} />
+                        <Route path="produtos" element={<Protected> <ListarProdutosVenda /> </Protected>} />
+                        <Route path="editar/:id" element={<Protected> <CardEditavelProdutoVenda /> </Protected>} />
                     </Route>
                 </Route>
 

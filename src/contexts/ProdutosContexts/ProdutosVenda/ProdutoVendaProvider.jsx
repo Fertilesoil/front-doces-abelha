@@ -8,11 +8,14 @@ export const ProdutoVendaProvider = ({ children }) => {
 
   const [ativoCard, setAtivoCard] = useState(false);
   const [ativoCadastrar, setAtivoCadastrar] = useState(false);
+  const [ativoEditar, setAtivoEditar] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
   const [recheios, setRecheios] = useState([]);
   const [produtos, setProdutos] = useState([]);
+
+  const [produto, setProduto] = useState(null);
 
   const shared = {
     ativoCard,
@@ -24,7 +27,11 @@ export const ProdutoVendaProvider = ({ children }) => {
     loading,
     setLoading,
     produtos,
-    setProdutos
+    setProdutos,
+    ativoEditar,
+    setAtivoEditar,
+    produto,
+    setProduto
   }
 
   return (

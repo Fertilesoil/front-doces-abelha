@@ -65,8 +65,6 @@ const FormularioProdutoVenda = () => {
     console.log(produto);
   }
 
-  console.log(produto);
-
   useEffect(() => {
     if (recheios.length === 0) {
       listarRecheios();
