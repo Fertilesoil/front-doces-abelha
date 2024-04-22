@@ -9,16 +9,17 @@ import Cadastro from "../pages/Cadastro";
 import HomePage from "../pages/HomePage";
 import Protected from "../middlewares/Protected";
 import DefaultLayout from "../pages/DefaultLayout";
-import HomeProdutos from "../pages/HomeProdutos";
-import HomeRecheios from "../pages/HomeRecheios";
-import FormularioRecheio from "../components/recheios/FormularioRecheio";
-import ListarRecheios from "../pages/ListarRecheios";
-import EditarRecheio from "../components/recheios/EditarRecheio";
+import HomeProdutos from "../pages/produtoVenda/HomeProdutos";
+import HomeRecheios from "../pages/recheio/HomeRecheios";
+// import FormularioRecheio from "../components/recheios/FormularioRecheio";
+import ListarRecheios from "../pages/recheio/ListarRecheios";
+import EditarRecheio from "../pages/recheio/EditarRecheio";
 import { RecheioProvider } from "../contexts/RecheioContext/RecheioProvider";
 import { ProdutoVendaProvider } from "../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaProvider";
 import FormularioProdutoVenda from "../components/produtosVenda/FormularioProdutoVenda";
-import ListarProdutosVenda from "../pages/ListarProdutosVenda";
+import ListarProdutosVenda from "../pages/produtoVenda/ListarProdutosVenda";
 import CardEditavelProdutoVenda from "../components/produtosVenda/CardEditavelProdutoVenda";
+import CadastroRecheio from "../pages/recheio/CadastroRecheio";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -40,7 +41,7 @@ export const router = createBrowserRouter(
 
                 <Route path="/recheios" element={<Protected> <RecheioProvider /> </Protected>} >
                     <Route path="" element={<Protected> <HomeRecheios /> </Protected>}>
-                        <Route path="cadastro" element={<Protected> <FormularioRecheio /> </Protected>} />
+                        <Route path="cadastro" element={<Protected> <CadastroRecheio /> </Protected>} />
                         <Route path="listar" element={<Protected> <ListarRecheios /> </Protected>} />
                         <Route path="editar/:id" element={<Protected> <EditarRecheio /> </Protected>} />
                     </Route>

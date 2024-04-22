@@ -1,4 +1,5 @@
 ﻿/* eslint-disable no-unused-vars */
+
 import { useState } from "react";
 import { childrenPropType } from "../../PropTypes/PropTypeValidation"
 import { RecheioContext } from "./RecheioContext";
@@ -26,7 +27,7 @@ export const RecheioProvider = ({ children }) => {
     setLoading(true);
     try {
       const recheiosListados = await Api.get("/api/listarRecheios");
-      
+
       setLoading(false);
       setRecheios(recheiosListados.data.reverse());
     } catch (error) {
@@ -64,7 +65,7 @@ export const RecheioProvider = ({ children }) => {
     }
   }
 
-  
+
   const atualizarRecheio = async (id, recheioAtualizado) => {
     setLoadAtualizar(true);
     try {
@@ -89,11 +90,31 @@ export const RecheioProvider = ({ children }) => {
 
       await atualizarRecheios();
 
+      setLoadExcluir(false);
       toast.success("Recheio deletado com sucesso!");
       navigate("/recheios/listar");
     } catch (error) {
+      setLoadExcluir(false);
       toast.error(error.response.data.msg);
       toast.error(error.message);
+    }
+  }
+
+  const cadastrarRecheio = async (e, recheio) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const recheioCadastrado = await Api.post("/api/cadastrarRecheio", recheio);
+
+      await atualizarRecheios()
+
+      setLoading(false);
+      toast.success("Recheio cadastrado com sucesso!");
+      navigate("/recheios/listar");
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message);
+      toast.error(error.response.data.msg);
     }
   }
 
@@ -118,7 +139,8 @@ export const RecheioProvider = ({ children }) => {
     setLoadExcluir,
     navigate,
     atualizarRecheio,
-    deletarRecheio
+    deletarRecheio,
+    cadastrarRecheio
   }
 
   return (

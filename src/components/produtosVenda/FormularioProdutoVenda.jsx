@@ -3,8 +3,8 @@
 import { useContext, useEffect, useState } from "react";
 import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
 import { TailSpinLoader } from "../loaders/TailSpinLoader";
-import { useNavigate } from "react-router-dom";
 import { atualizarRecheioProduto } from "../../utils/Utilidades";
+import FormularioWraper from "../shared/wrapers/FormularioWraper";
 
 const FormularioProdutoVenda = () => {
 
@@ -40,8 +40,7 @@ const FormularioProdutoVenda = () => {
   }, [recheios.length]);
 
   return (
-    <div className="flex justify-center items-center h-[80vh]">
-
+    <FormularioWraper>
       <form className="border-4 border-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[30%] h-[85%] flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all">
 
         <legend className="text-xl font-bold text-slate-600">
@@ -138,8 +137,7 @@ const FormularioProdutoVenda = () => {
         </button>
 
       </form >
-
-    </div >
+    </FormularioWraper>
   )
 }
 

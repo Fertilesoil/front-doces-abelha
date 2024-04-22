@@ -1,8 +1,8 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
-import CardRecheio from "../components/recheios/CardRecheio";
-import SpiralLoader from "../components/loaders/SpiralLoader";
-import { RecheioContext } from "../contexts/RecheioContext/RecheioContext";
+import CardRecheio from "../../components/recheios/CardRecheio";
+import SpiralLoader from "../../components/loaders/SpiralLoader";
+import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
 
 const ListarRecheios = () => {
 

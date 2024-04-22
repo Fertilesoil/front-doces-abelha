@@ -46,3 +46,26 @@ export const botaoLinkPropType = {
   loading: PropTypes.bool,
   titulo: PropTypes.string
 }
+
+export const idPropType = {
+  id: PropTypes.string
+}
+
+export const recheioBotaoExcluirPropType = {
+  loader: PropTypes.bool,
+  funcao: PropTypes.func,
+  id: PropTypes.string
+}
+
+export const recheioBotaoEditarPropType = {
+  loader: PropTypes.bool,
+  funcao: PropTypes.func,
+  id: PropTypes.string,
+  recheio: PropTypes.string
+}
+
+export const botaoFormularioPropType = {
+  loader: PropTypes.bool,
+  funcao: PropTypes.func,
+  recheio: PropTypes.string
+}

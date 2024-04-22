@@ -1,7 +1,7 @@
 ﻿import { Outlet } from "react-router-dom"
-import { RecheioContext } from "../contexts/RecheioContext/RecheioContext";
+import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
 import { useContext } from "react";
-import BotaoLinkRecheios from "../components/botoes/BotaoLinkRecheios";
+import BotaoLinkRecheios from "../../components/shared/botoes/BotaoLinkRecheios";
 
 const HomeRecheios = () => {
 

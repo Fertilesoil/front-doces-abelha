@@ -1,8 +1,8 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
-import { ProdutoVendaContext } from "../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
-import CardProdutoVenda from "../components/produtosVenda/CardProdutoVenda";
-import SpiralLoader from "../components/loaders/SpiralLoader";
+import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
+import CardProdutoVenda from "../../components/produtosVenda/CardProdutoVenda";
+import SpiralLoader from "../../components/loaders/SpiralLoader";
 
 const ListarProdutosVenda = () => {
 
@@ -11,7 +11,6 @@ const ListarProdutosVenda = () => {
     produtos,
     loading,
     listarProdutos } = useContext(ProdutoVendaContext);
-
 
   useEffect(() => {
     setAtivoCard(true);

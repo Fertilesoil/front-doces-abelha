@@ -1,7 +1,7 @@
 ﻿import { useContext } from "react"
 import { Outlet } from "react-router-dom"
-import { ProdutoVendaContext } from "../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
-import BotaoLinkProdutos from "../components/botoes/BotaoLinkProdutos";
+import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
+import BotaoLinkProdutos from "../../components/shared/botoes/BotaoLinkProdutos";
 
 const HomeProdutos = () => {
 
