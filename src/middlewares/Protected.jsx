@@ -2,7 +2,6 @@
 import { AuthContext } from "../contexts/UserContext/UserContext";
 import { useNavigate } from "react-router-dom";
 import { childrenPropType } from "../PropTypes/PropTypeValidation";
-// import toast from "react-hot-toast";
 
 const Protected = ({ children }) => {
   const { usuario } = useContext(AuthContext);
@@ -13,7 +12,7 @@ const Protected = ({ children }) => {
     if (usuario === null) {
       navigate("/login", { replace: true });
     }
-  }, []);
+  }, [usuario, navigate]);
 
   return usuario?.perfil && children;
 }

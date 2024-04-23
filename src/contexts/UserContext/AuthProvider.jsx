@@ -18,32 +18,6 @@ export const AuthProvider = ({ children }) => {
 
   const iniciais = obterIniciais(usuario);
 
-  const manter = () => {
-    Api.interceptors.request.use(async (config) => {
-
-      try {
-        let token = "";
-        const response = await interceptador.post("/api/refresh", {
-          token
-        });
-
-        config.headers.Authorization = `Bearer ${response.data.tokenAcesso}`;
-
-        const perfil = await interceptador.get("/api/autenticacao", {
-          headers: {
-            Authorization: `Bearer ${response.data.tokenAcesso}`
-          }
-        });
-
-        setUsuario({ perfil: perfil.data, token: response.data.tokenAcesso });
-        return usuario.perfil.sobrenome;
-      } catch (error) {
-        console.log(`Erro: ${error}`);
-      }
-      return config;
-    })
-  }
-
   const loginApiCall = async (payload) => {
     try {
       setLoading(true);
@@ -69,7 +43,8 @@ export const AuthProvider = ({ children }) => {
   const logoutApiCall = async () => {
     try {
       const deslogar = await Api.post("/api/logout");
-      console.log(deslogar.data);
+      
+      Api.interceptors.request.eject(interceptador);
       if (deslogar) {
         return null;
       }
@@ -81,7 +56,6 @@ export const AuthProvider = ({ children }) => {
   let shared = {
     usuario,
     loginApiCall,
-    manter,
     setUsuario,
     loading,
     setLoading,

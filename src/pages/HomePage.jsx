@@ -2,11 +2,10 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../contexts/UserContext/UserContext";
 import { Api } from "../services/Api";
-import { refreshToken } from "../services/UsuarioService";
 
 const HomePage = () => {
 
-  const { usuario, setUsuario, setLoading, loading } = useContext(AuthContext);
+  const { usuario, setLoading, loading } = useContext(AuthContext);
   const [produtos, setProdutos] = useState([]);
 
   const buscarProdutos = async () => {
@@ -21,7 +20,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    refreshToken(setUsuario);
     buscarProdutos();
   }, []);
 
