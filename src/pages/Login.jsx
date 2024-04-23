@@ -18,8 +18,7 @@ const Login = () => {
           navigate("/");
         }
       });
-  });
-
+  }, []);
 
   return (
     <FormsWraper

@@ -18,9 +18,8 @@ const Cadastro = () => {
           navigate("/");
         }
       });
-  });
+  }, []);
 
-  console.log(`Fui montado`);
   return (
     <FormsWraper
       flex="flex-row-reverse"

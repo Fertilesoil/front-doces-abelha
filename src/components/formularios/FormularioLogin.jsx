@@ -23,7 +23,7 @@ const FormularioLogin = () => {
     try {
       const response = await loginApiCall(value);
 
-      if (response.response.data.msg === "Email ou senha inválidos") {
+      if (response.response?.data?.msg === "Email ou senha inválidos") {
         toast.error(`Email ou senha inválidos`);
         navigate("/login", { replace: true });
       } else {
