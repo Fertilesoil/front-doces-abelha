@@ -69,3 +69,9 @@ export const botaoFormularioPropType = {
   funcao: PropTypes.func,
   recheio: PropTypes.string
 }
+
+export const navHomeWrapperPropType = {
+  children: PropTypes.node,
+  secao: PropTypes.string,
+  elemento: PropTypes.node
+}

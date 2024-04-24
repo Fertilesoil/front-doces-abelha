@@ -6,7 +6,7 @@ import { recheioBotaoExcluirPropType } from "../../../../PropTypes/PropTypeValid
 const BotaoExcluir = ({ loader, funcao, id }) => {
   return (
     <button
-      className={`w-[30%] bg-pink-300 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center ${loader && "py-2"}`}
+      className={`w-[30%] bg-pink-500 hover:scale-105 transition-all rounded-[.3rem] py-[.40rem] flex justify-center items-center ${loader && "py-2"}`}
       onClick={() => {
         funcao(id);
       }}
@@ -20,7 +20,7 @@ const BotaoExcluir = ({ loader, funcao, id }) => {
           />
           :
           <Trash2
-            size={25}
+            size={23}
             strokeWidth={2.5}
           />
       }

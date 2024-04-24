@@ -12,17 +12,17 @@ const FormularioRecheio = () => {
   const { cadastrarRecheio, loading } = useContext(RecheioContext);
 
   return (
-    <form className="border-4 border-pink-200 focus-within:border-pink-400 rounded-md shadow-xl w-[40%] h-[30%] flex flex-col justify-center gap-5 items-center font-ManRope bg-pink-50 transition-all">
+    <form className="ring-4 ring-pink-200 focus-within:ring-pink-400 rounded-md shadow-md w-[40%] h-[30%] flex flex-col justify-center gap-5 items-center font-ManRope bg-pink-50 transition-all duration-[.37s]">
 
       <legend
-        className="text-lg font-bold text-slate-600"
+        className="text-lg font-bold text-slate-500"
       >
         Qual o nome do recheio que você gostaria de cadastrar?
       </legend>
 
       <input
         type="text"
-        className="border-2 p-[.5rem] w-[80%] focus:ring focus:ring-pink-300 text-slate-700 font-[500] rounded-sm"
+        className="ring-2 ring-pink-100 p-[.5rem] w-[80%] focus:ring-pink-300 text-slate-600 font-[600] placeholder:font-[600] rounded-sm transition-all duration-[.37s]"
         placeholder="Recheio..."
         onChange={e => setRecheio({ ...recheio, nome: e.target.value })}
       />

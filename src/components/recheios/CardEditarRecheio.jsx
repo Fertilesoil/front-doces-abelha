@@ -22,7 +22,7 @@ const EditarRecheio = ({ id }) => {
     deletarRecheio } = useContext(RecheioContext);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope  focus-within:ring-pink-400">
+    <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope  focus-within:ring-pink-400 transition-all duration-[.37s]">
 
       {loading ?
         <SpiralLoader
@@ -47,12 +47,12 @@ const EditarRecheio = ({ id }) => {
 
           <input
             type="text"
-            className="ring-2 ring-pink-200 p-[.2rem] w-[80%] focus:ring focus:ring-pink-300 text-slate-700 font-[500] rounded-sm"
+            className="ring-2 ring-pink-200 p-[.2rem] w-[80%] focus:ring focus:ring-pink-300 text-slate-600 placeholder:font-[500] font-[500] rounded-sm transition-all duration-[.37s]"
             onChange={(e) => setRecheioAtualizado({ ...recheioAtualizado, nome: e.target.value })}
             placeholder="Novo nome..."
           />
 
-          <div className="w-[80%] flex justify-around items-center text-white rounded-sm ">
+          <div className="w-[80%] flex justify-around items-center text-white rounded-sm">
             <BotaoExcluir
               loader={loadExcluir}
               funcao={deletarRecheio}

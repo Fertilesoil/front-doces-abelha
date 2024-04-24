@@ -4,7 +4,7 @@ import { TailSpinLoader } from "../../../loaders/TailSpinLoader"
 const BotaoFormulario = ({loader, funcao, recheio}) => {
   return (
     <button
-      className={`px-5 py-1.5 bg-pink-300 text-white rounded-md font-[500] flex items-center hover:scale-105 transition-all ${loader && "px-7 py-2"}`}
+      className={`px-5 py-1.5 bg-pink-500 text-white rounded-md font-[500] flex items-center hover:scale-[1.03] transition-all duration-[.37s] ${loader && "px-7 py-2"}`}
       onClick={(e) => {
         funcao(e, recheio)
       }}

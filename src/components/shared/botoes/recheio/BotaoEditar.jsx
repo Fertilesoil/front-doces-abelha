@@ -4,9 +4,8 @@ import { TailSpinLoader } from "../../../loaders/TailSpinLoader";
 const BotaoEditar = ({loader, funcao, id, recheio}) => {
   return (
     <button
-      className={`flex items-center justify-center w-[30%] bg-pink-300 font-[600] hover:scale-105 transition-all rounded-[.3rem] py-1.5 ${loader && "py-2"}`}
+      className={`flex items-center justify-center w-[30%] bg-pink-500 font-[600] hover:scale-105 transition-all rounded-[.3rem] py-[.45rem] text-sm ${loader && "py-2"}`}
       onClick={() => {
-        // atualizarRecheio(id, recheioAtualizado);
         funcao(id, recheio);
       }}
     >
