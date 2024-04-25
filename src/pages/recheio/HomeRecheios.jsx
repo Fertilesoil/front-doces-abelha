@@ -27,7 +27,7 @@ const HomeRecheios = () => {
         loading={ativoEditar}
         titulo={`Editar`}
       />
-    </NavHomeWrapper>
+      </NavHomeWrapper>
   )
 }
 

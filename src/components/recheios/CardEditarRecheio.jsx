@@ -22,7 +22,7 @@ const EditarRecheio = ({ id }) => {
     deletarRecheio } = useContext(RecheioContext);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope  focus-within:ring-pink-400 transition-all duration-[.37s]">
+    <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope  focus-within:ring-pink-400 transition-all duration-[.37s] shadow-sm">
 
       {loading ?
         <SpiralLoader
