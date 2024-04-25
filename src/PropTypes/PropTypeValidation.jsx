@@ -75,3 +75,9 @@ export const navHomeWrapperPropType = {
   secao: PropTypes.string,
   elemento: PropTypes.node
 }
+
+export const templateHomePropType = {
+  titulo: PropTypes.string,
+  produto: PropTypes.string,
+  plural: PropTypes.string
+} 
