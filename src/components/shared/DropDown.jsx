@@ -33,14 +33,14 @@ const DropDown = ({ loading, recheios, posicao, funcao, produto }) => {
         className="text-sm min-w-52 disabled:bg-slate-400 bg-teal-400 hover:bg-teal-500 px-3 py-1 rounded-lg text-white flex items-center justify-between transition-all duration-[.37s]">
         {texto}
         <div>
-          {expandido ? <ChevronUp size={27} /> : <ChevronDown size={27} />}
+          {expandido ? <ChevronUp size={27} className="animate-slide-up" /> : <ChevronDown size={27} className="animate-slide-down" />}
         </div>
       </button>
 
       {
         expandido &&
         <div
-          className={` bar bg-teal-400 rounded-lg ${posicao} min-w-52 absolute max-h-[6rem] overflow-y-auto overflow-x-hidden flex flex-col transition-all duration-[.37s] shadow-md`}>
+          className={` bar animate-slide-down bg-teal-400 rounded-lg ${posicao} min-w-52 absolute max-h-[6rem] overflow-y-auto overflow-x-hidden flex flex-col transition-all duration-[.37s] shadow-md`}>
           {recheios?.map(recheio => (
             <button
               onClick={(e) => recheioEscolhido(e)}

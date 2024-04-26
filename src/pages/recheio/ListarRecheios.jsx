@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import CardRecheio from "../../components/recheios/CardRecheio";
 import SpiralLoader from "../../components/loaders/SpiralLoader";
 import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
+import BarraDePesquisa from "../../components/shared/BarraDePesquisa";
 
 const ListarRecheios = () => {
 
@@ -22,6 +23,10 @@ const ListarRecheios = () => {
 
   return (
     <section className="my-4">
+
+      <BarraDePesquisa
+        reserva={recheios}
+      />
 
       <div className="grid grid-cols-3 grid-rows-subgrid place-items-center gap-4">
         {loading ?
