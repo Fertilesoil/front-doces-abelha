@@ -14,15 +14,15 @@ const DropDown = ({ loading, recheios, posicao, funcao, produto }) => {
 
     const recheio = e.target.textContent;
     setTexto(recheio);
+    setExpandido(!expandido);
 
     let recheioAtual = await recheios.find(recheio => recheio.nome === e.target.textContent);
     funcao({ ...produto, recheio_id: recheioAtual.id })
-    setExpandido(anterior => !anterior);
   }
 
   const toggle = (e) => {
     e.preventDefault();
-    setExpandido(anterior => !anterior);
+    setExpandido(!expandido);
   }
 
   return (

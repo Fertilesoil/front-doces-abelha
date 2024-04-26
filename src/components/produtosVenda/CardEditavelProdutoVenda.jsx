@@ -86,7 +86,7 @@ const CardEditavelProdutoVenda = () => {
     <section className="h-[80vh] flex justify-center items-center">
 
       <form
-        className="ring-4 ring-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[50%] h-[70%] p-4 flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all text-slate-600 hover:scale-105">
+        className="ring-4 ring-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[50%] h-[70%] p-4 flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all text-slate-600">
 
         {
           loadProduto ?
@@ -162,30 +162,10 @@ const CardEditavelProdutoVenda = () => {
                   <DropDown
                     loading={carregando}
                     recheios={recheios}
-                    posicao={`bottom-[-1.3rem]`}
+                    posicao={`bottom-[9rem]`}
                     funcao={setProdutoAtualizado}
                     produto={produtoAtualizado}
                   />
-
-                  {/* <select
-                    onChange={(e) => atualizarRecheioEdicao(e, recheios, setProdutoAtualizado, produtoAtualizado)}
-                  >
-
-                    <option disabled selected>
-                      Escolha o recheio
-                    </option>
-
-                    {
-                      recheios.map(recheio => (
-                        <option
-                          key={recheio.id}
-                        >
-                          {recheio.nome}
-                        </option>
-                      ))
-                    }
-
-                  </select> */}
 
                 </div>
               </div>

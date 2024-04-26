@@ -11,7 +11,7 @@ const CardProdutoVenda = ({ produtos }) => {
         produtos.map(produto => (
           <div
             key={produto?.id}
-            className="ring-4 ring-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[90%] h-full p-4 flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all text-slate-600 hover:scale-105">
+            className="ring-4 ring-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[90%] h-full p-4 flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all text-slate-500">
 
             <div className="flex justify-center items-center w-full">
               <h2
@@ -22,7 +22,7 @@ const CardProdutoVenda = ({ produtos }) => {
 
               <Link
                 to={`/produtosVenda/editar/${produto.id}`}
-                className="text-[#F7F7F7] ring-1 ring-teal-300 bg-teal-300 rounded-sm py-1 px-2 hover:scale-110 transition-all">
+                className="text-[#F7F7F7] ring-1 ring-teal-600 bg-teal-600 rounded-sm py-1 px-2 hover:scale-110 transition-all">
                 <FilePenLine size={20} strokeWidth={2.5} />
               </Link>
             </div>
