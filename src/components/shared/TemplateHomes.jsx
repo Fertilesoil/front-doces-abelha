@@ -1,14 +1,17 @@
 ﻿import { templateHomePropType } from "../../PropTypes/PropTypeValidation"
 
-const TemplateHomes = ({titulo, produto, plural}) => {
-  
+
+const TemplateHomes = ({ titulo, produto, plural, corTexto, gradient }) => {
+
+  const textBase = `${corTexto} font-[500] mt-4 text-pretty text-[1.045rem]`;
+
   return (
     <section className="h-[90vh] after:bg-abelha-home after:top-0 after:left-0 after:w-[100vw] after:fixed after:h-[100vh] after:bg-center after:bg-contain after:bg-no-repeat after:opacity-20 after:z-[-10] flex items-center justify-center flex-col font-ManRope">
 
       <div className=" w-[52%] h-full text-center text-balance shadow-sm rounded-sm p-2 backdrop-blur-sm flex flex-col gap-5 justify-center">
 
         <div className=" flex justify-around w-full items-center">
-          <h2 className="bg-gradient-to-bl from-rose-500 via-pink-600 to-pink-700 bg-clip-text text-transparent text-4xl font-[600] font-SpecialElite tracking-wide">
+          <h2 className={`${gradient} bg-clip-text text-transparent text-4xl font-[600] font-SpecialElite tracking-wide`}>
             {titulo}
           </h2>
 
@@ -17,15 +20,15 @@ const TemplateHomes = ({titulo, produto, plural}) => {
           </h4>
         </div>
 
-        <p className="text-pink-500 font-[500] mt-4 text-pretty text-[1.045rem]">
+        <p className={textBase}>
           O menu de operações ficará visível durante sua permanência na seção, nele você poderá realizar as operações de criação de um novo {produto}, visualizar os {plural} já salvos por você e também editá-los.
         </p>
 
-        <p className="text-pink-500 font-[500] mt-4 text-pretty text-[1.045rem]">
+        <p className={textBase}>
           O sistema é desenhado para que seja simples e intuitivo. Você pode cadastrar seu {produto} no primeiro botão a esquerda onde encontrará um card editável. Depois de cadastrado você será redirecionado automaticamente a tela de listagem.
         </p>
 
-        <p className="text-pink-500 font-[500] mt-4 text-pretty text-[1.045rem]">
+        <p className={textBase}>
           Na listagem você verá que cada card possui um botão. Esse botão te levará para a página de edição onde você poderá editar as informações do {produto} ou deletá-lo.
         </p>
 

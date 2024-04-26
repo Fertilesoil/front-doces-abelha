@@ -11,7 +11,7 @@ const Navigation = ({ children }) => {
   const [expandido, setExpandido] = useState(false);
 
   return (
-    <aside className='h-screen  absolute top-0 left-0'>
+    <aside className='h-screen fixed top-0 left-0'>
       <nav className="h-full flex flex-col border-r shadow-sm bg-white">
 
         <div className="p-2 pb-2 flex justify-between items-center">

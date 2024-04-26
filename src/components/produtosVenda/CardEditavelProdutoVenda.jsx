@@ -8,7 +8,7 @@ import SpiralLoader from "../loaders/SpiralLoader";
 import { TailSpinLoader } from "../loaders/TailSpinLoader";
 import toast from "react-hot-toast";
 import { Api } from "../../services/Api";
-import { atualizarRecheioEdicao } from "../../utils/Utilidades";
+import DropDown from "../shared/DropDown";
 
 
 const CardEditavelProdutoVenda = () => {
@@ -31,6 +31,10 @@ const CardEditavelProdutoVenda = () => {
   const navigate = useNavigate();
 
   const [produtoAtualizado, setProdutoAtualizado] = useState(null);
+
+  console.log(produtoAtualizado);
+
+  const [carregando, setCarregando] = useState(true);
 
   const buscarProduto = async () => {
     setLoadProduto(true);
@@ -68,6 +72,9 @@ const CardEditavelProdutoVenda = () => {
     if (recheios.length === 0) {
       listarRecheios();
     }
+
+    if (recheios.length > 0)
+      setCarregando(false);
 
     buscarProduto();
     return () => {
@@ -152,7 +159,15 @@ const CardEditavelProdutoVenda = () => {
                 <div className="flex flex-col justify-center items-center">
                   <h6 className="font-medium text-sm ">Atual Recheio: {produto?.recheio?.nome}</h6>
 
-                  <select
+                  <DropDown
+                    loading={carregando}
+                    recheios={recheios}
+                    posicao={`bottom-[-1.3rem]`}
+                    funcao={setProdutoAtualizado}
+                    produto={produtoAtualizado}
+                  />
+
+                  {/* <select
                     onChange={(e) => atualizarRecheioEdicao(e, recheios, setProdutoAtualizado, produtoAtualizado)}
                   >
 
@@ -170,7 +185,8 @@ const CardEditavelProdutoVenda = () => {
                       ))
                     }
 
-                  </select>
+                  </select> */}
+
                 </div>
               </div>
 

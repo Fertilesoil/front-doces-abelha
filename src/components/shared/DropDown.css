@@ -1,0 +1,19 @@
+﻿.bar::-webkit-scrollbar {
+  width: .4rem;
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+}
+
+.bar::-webkit-scrollbar-track {
+  width: .4rem;
+  background-color: transparent;
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+}
+
+.bar::-webkit-scrollbar-thumb {
+  width: .4rem;
+  background-color: rgba(0, 128, 128, 0.37);
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+}

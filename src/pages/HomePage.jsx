@@ -1,5 +1,5 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../contexts/UserContext/UserContext";
 import { Api } from "../services/Api";
 
@@ -19,9 +19,9 @@ const HomePage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   buscarProdutos();
-  // }, []);
+  useEffect(() => {
+    buscarProdutos();
+  }, []);
 
   return (
     <main className='h-screen after:bg-abelha-home after:top-0 after:left-0 after:w-[100vw] after:fixed after:h-[100vh] after:bg-center after:bg-contain after:bg-no-repeat after:opacity-20 after:z-[-10]  flex justify-center items-center flex-col '>

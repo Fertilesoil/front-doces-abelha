@@ -79,5 +79,15 @@ export const navHomeWrapperPropType = {
 export const templateHomePropType = {
   titulo: PropTypes.string,
   produto: PropTypes.string,
-  plural: PropTypes.string
+  plural: PropTypes.string,
+  corTexto: PropTypes.string,
+  gradient: PropTypes.string
 } 
+
+export const dropDownPropType = {
+  loading: PropTypes.bool,
+  recheios: PropTypes.array,
+  posicao: PropTypes.string,
+  funcao: PropTypes.func,
+  produto: PropTypes.object
+}

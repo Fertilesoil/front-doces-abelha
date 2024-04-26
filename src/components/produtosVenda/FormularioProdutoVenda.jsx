@@ -3,12 +3,14 @@
 import { useContext, useEffect, useState } from "react";
 import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
 import { TailSpinLoader } from "../loaders/TailSpinLoader";
-import { atualizarRecheioProduto } from "../../utils/Utilidades";
 import FormularioWraper from "../shared/wrapers/FormularioWraper";
+import DropDown from "../shared/DropDown";
 
 const FormularioProdutoVenda = () => {
 
   const [produto, setProduto] = useState(null);
+
+  const [carregando, setCarregando] = useState(true);
 
   const {
     setAtivoCadastrar,
@@ -33,6 +35,9 @@ const FormularioProdutoVenda = () => {
     if (recheios.length === 0) {
       listarRecheios();
     }
+
+    if (recheios.length > 0)
+      setCarregando(false);
 
     return () => {
       setAtivoCadastrar(false);
@@ -99,25 +104,15 @@ const FormularioProdutoVenda = () => {
 
         <div className="flex justify-between items-center text-slate-600 font-[600] border-3 border-red-300 w-[80%]">
           <h3>Recheio</h3>
-          <select name="" id=""
-            onChange={(e) => atualizarRecheioProduto(e, recheios, setProduto, produto)}
-          >
 
-            <option disabled selected>
-              Escolha o recheio
-            </option>
+          <DropDown
+            loading={carregando}
+            recheios={recheios}
+            posicao={`bottom-[7.3rem]`}
+            funcao={setProduto}
+            produto={produto}
+          />
 
-            {
-              recheios.map(recheio => (
-                <option
-                  key={recheio.id}
-                >
-                  {recheio.nome}
-                </option>
-              ))
-            }
-
-          </select>
         </div>
 
         <button

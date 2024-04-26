@@ -18,7 +18,7 @@ export const atualizarRecheioEdicao = async (e, recheios, funcao, produto) => {
 }
 
 export const atualizarRecheioProduto = async (e, recheios, funcao, produto) => {
-  let nome = e.target.value
+  let nome = e.target.textContent
   let recheio = await recheios.find(recheio => recheio.nome === nome)
   funcao({ ...produto, recheio_id: recheio.id })
 }
