@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+﻿import { useCallback, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { dropDownPropType } from "../../PropTypes/PropTypeValidation";
 import "./DropDown.css";
@@ -9,21 +9,22 @@ const DropDown = ({ loading, recheios, posicao, funcao, produto }) => {
 
   const [texto, setTexto] = useState(`Escolha o recheio`);
 
-  const recheioEscolhido = async (e) => {
-    e.preventDefault();
+  const recheioEscolhido = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    const recheio = e.target.textContent;
-    setTexto(recheio);
-    setExpandido(!expandido);
+      const recheio = e.target.textContent;
+      setTexto(recheio);
+      setExpandido(expandido => !expandido);
 
-    let recheioAtual = await recheios.find(recheio => recheio.nome === e.target.textContent);
-    funcao({ ...produto, recheio_id: recheioAtual.id })
-  }
+      let recheioAtual = await recheios.find(recheio => recheio.nome === e.target.textContent);
+      funcao({ ...produto, recheio_id: recheioAtual.id })
+    }, [funcao, produto, recheios]);
 
   const toggle = (e) => {
     e.preventDefault();
-    setExpandido(!expandido);
-  }
+    setExpandido(expandido => !expandido);
+  };
 
   return (
     <div>

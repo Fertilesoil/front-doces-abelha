@@ -3,7 +3,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { childrenPropType } from "../../../PropTypes/PropTypeValidation"
 import { ProdutoVendaContext } from "./ProdutoVendaContext";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Api } from "../../../services/Api";
 import toast from "react-hot-toast";
 
@@ -39,7 +39,7 @@ export const ProdutoVendaProvider = ({ children }) => {
     }
   }
 
-  const listarProdutos = async () => {
+  const listarProdutos = useCallback(async () => {
     setLoading(true);
     try {
       const todosProdutos = await Api.get("/api/listarProdutosVenda");
@@ -53,19 +53,21 @@ export const ProdutoVendaProvider = ({ children }) => {
       toast.error(error.message);
       toast.error(error.response.data.msg);
     }
-  }
+  },[]);
 
-  const listarRecheios = async () => {
+  const listarRecheios = useCallback(async () => {
     try {
       const recheiosListados = await Api.get("/api/listarRecheios");
 
-      setRecheios(recheiosListados.data);
+      const ordenado = recheiosListados.data.sort((a, b) => a.nome.localeCompare(b.nome));
+
+      setRecheios(ordenado);
       toast.success("Recheios prontos para seleção");
     } catch (error) {
       toast.error(error.message);
       toast.error(error.response.data.msg);
     }
-  }
+  },[]);
 
   const atualizarProduto = async (e, id, produtoAtualizado) => {
     e.preventDefault();
@@ -112,29 +114,6 @@ export const ProdutoVendaProvider = ({ children }) => {
     }
   }
 
-  const enviarFormulario = async (e, produto) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-
-      produto.peso = Number(produto.peso)
-      produto.preco = Number(produto.preco)
-      produto.quantidade = Number(produto.quantidade)
-
-      const produtoVenda = await Api.post("/api/cadastrarProdutosVenda", produto);
-
-      await atualizarProdutos();
-
-      setLoading(false);
-      toast.success("Produto registrado com sucesso!");
-      navigate("/produtosVenda/produtos");
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
-      toast.error(error.response.data.msg);
-    }
-  }
-
   const shared = {
     ativoCard,
     setAtivoCard,
@@ -160,8 +139,7 @@ export const ProdutoVendaProvider = ({ children }) => {
     listarRecheios,
     atualizarProduto,
     deletarProduto,
-    setLoadProduto,
-    enviarFormulario
+    setLoadProduto
   }
 
   return (

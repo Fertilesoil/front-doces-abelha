@@ -1,10 +1,13 @@
 ﻿/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
-import { TailSpinLoader } from "../loaders/TailSpinLoader";
 import FormularioWraper from "../shared/wrapers/FormularioWraper";
 import DropDown from "../shared/DropDown";
+import BotaoFormulario from "../shared/botoes/produtosVenda/BotaoFormulario";
+import CampoFormulario from "../shared/botoes/produtosVenda/CampoFormulario";
+import { Api } from "../../services/Api";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const FormularioProdutoVenda = () => {
 
@@ -12,14 +15,40 @@ const FormularioProdutoVenda = () => {
 
   const [carregando, setCarregando] = useState(true);
 
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
   const {
     setAtivoCadastrar,
     recheios,
-    loading,
     listarRecheios,
-    enviarFormulario } = useContext(ProdutoVendaContext);
+    atualizarProdutos} = useContext(ProdutoVendaContext);
 
-  const guardarValores = (e) => {
+  const enviarFormulario = async (e, produto) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+
+      produto.peso = Number(produto.peso)
+      produto.preco = Number(produto.preco)
+      produto.quantidade = Number(produto.quantidade)
+
+      const produtoVenda = await Api.post("/api/cadastrarProdutosVenda", produto);
+
+      await atualizarProdutos();
+
+      setLoading(false);
+      toast.success("Produto registrado com sucesso!");
+      navigate("/produtosVenda/produtos");
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message);
+      toast.error(error.response.data.msg);
+    }
+  };
+
+  const guardarValores = useCallback((e) => {
     let nome = e.target.name;
     let valor = e.target.value;
 
@@ -27,7 +56,7 @@ const FormularioProdutoVenda = () => {
       ...produto,
       [nome]: valor
     })
-  }
+  }, [produto]);
 
   useEffect(() => {
     setAtivoCadastrar(true);
@@ -40,96 +69,70 @@ const FormularioProdutoVenda = () => {
       setCarregando(false);
 
     return () => {
-      setAtivoCadastrar(false);
+      setAtivoCadastrar(false)
     }
-  }, [recheios.length]);
+  }, [listarRecheios, recheios, setAtivoCadastrar]);
 
   return (
     <FormularioWraper>
-      <form className="border-4 border-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[30%] h-[85%] flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all">
+      <form className="border-4 border-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[30%] h-[85%] flex flex-col justify-center gap-6 items-center font-ManRope bg-teal-50 transition-all">
 
         <legend className="text-xl font-bold text-slate-600">
           Informações do produto de venda
         </legend>
 
-        <div className="flex justify-between items-center text-slate-600 font-[600] border-3 border-red-300 w-[80%]">
-          <h3>Nome</h3>
-          <input
-            type="text"
-            name="nome"
-            className="focus:bg-teal-400 p-1 bg-teal-300 rounded-md text-stone-100 appearance-none"
-            onChange={guardarValores}
-          />
-        </div>
+        <CampoFormulario
+          titulo={`Nome`}
+          type={`text`}
+          name={`nome`}
+          funcao={guardarValores}
+        />
 
-        <div className="flex justify-between items-center text-slate-600 font-[600] border-3 border-red-300 w-[80%]">
-          <h3>Descrição</h3>
-          <input
-            type="text"
-            name="descricao"
-            className="focus:bg-teal-400 p-1 bg-teal-300 rounded-md text-stone-100 appearance-none"
-            onChange={guardarValores}
-          />
-        </div>
+        <CampoFormulario
+          titulo={`Descricao`}
+          type={`text`}
+          name={`descricao`}
+          funcao={guardarValores}
+        />
 
-        <div className="flex justify-between items-center text-slate-600 font-[600] border-3 border-red-300 w-[80%]">
-          <h3>Peso</h3>
-          <input
-            type="number"
-            name="peso"
-            className="focus:bg-teal-400 p-1 bg-teal-300 rounded-md text-stone-100 appearance-none"
-            onChange={guardarValores}
-          />
-        </div>
+        <CampoFormulario
+          titulo={`Peso`}
+          type={`number`}
+          name={`peso`}
+          funcao={guardarValores}
+        />
 
-        <div className="flex justify-between items-center text-slate-600 font-[600] border-3 border-red-300 w-[80%]">
-          <h3>Preço</h3>
-          <input
-            type="number"
-            name="preco"
-            className="focus:bg-teal-400 p-1 bg-teal-300 rounded-md text-stone-100 appearance-none"
-            onChange={guardarValores}
-          />
-        </div>
+        <CampoFormulario
+          titulo={`Preço`}
+          type={`number`}
+          name={`preco`}
+          funcao={guardarValores}
+        />
 
-        <div className="flex justify-between items-center text-slate-600 font-[600] border-3 border-red-300 w-[80%]">
-          <h3>Quantidade</h3>
-          <input
-            type="number"
-            name="quantidade"
-            className="focus:bg-teal-400 p-1 bg-teal-300 rounded-md text-stone-100 appearance-none"
-            onChange={guardarValores}
-          />
-        </div>
+        <CampoFormulario
+          titulo={`Quantidade`}
+          type={`number`}
+          name={`quantidade`}
+          funcao={guardarValores}
+        />
 
-        <div className="flex justify-between items-center text-slate-600 font-[600] border-3 border-red-300 w-[80%]">
+        <div className="flex justify-between items-center text-slate-600 font-[600] w-[80%]">
           <h3>Recheio</h3>
 
           <DropDown
             loading={carregando}
             recheios={recheios}
-            posicao={`bottom-[7.3rem]`}
+            posicao={`bottom-[6.7rem]`}
             funcao={setProduto}
             produto={produto}
           />
-
         </div>
 
-        <button
-          className={`px-5 py-1.5 bg-teal-500 text-white rounded-md font-[500] flex items-center hover:scale-105 transition-all ${loading && "px-8 py-2.5 transition-all"}`}
-          onClick={(e) => {
-            enviarFormulario(e, produto);
-          }}
-        >
-          {
-            loading ?
-              <TailSpinLoader
-                cor={`#F7F7F7`}
-                tamanho={20}
-              />
-              : "Cadastrar"
-          }
-        </button>
+        <BotaoFormulario
+          funcao={enviarFormulario}
+          produto={produto}
+          loader={loading}
+        />
 
       </form >
     </FormularioWraper>

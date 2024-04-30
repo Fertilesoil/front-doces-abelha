@@ -1,5 +1,5 @@
 ﻿import { SquareChevronLeft, SquareChevronRight } from "lucide-react";
-import { createContext, useContext, useState } from "react";
+import { createContext, memo, useContext, useState } from "react";
 import { childrenCollectionPropType, navbarPropType } from "../../PropTypes/PropTypeValidation";
 import Perfil from "./Perfil";
 import { Link } from "react-router-dom";
@@ -39,7 +39,7 @@ const Navigation = ({ children }) => {
     </aside>
   )
 }
-export function NavbarItem({ icone, texto, to, funcao }) {
+export const NavbarItem = memo(function NavbarItem({ icone, texto, to, funcao }) {
   const { expandido } = useContext(NavbarContext);
 
   return (
@@ -58,7 +58,11 @@ export function NavbarItem({ icone, texto, to, funcao }) {
       {!expandido && <div className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-[#1d4151bd] text-[#F7F7F7] text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>{texto}</div>}
     </Link >
   )
-}
+})
+
+// export const Nav = memo(function NavbarItem({ icone, texto, to, funcao }) {
+  
+// });
 
 NavbarItem.propTypes = navbarPropType;
 Navigation.propTypes = childrenCollectionPropType;

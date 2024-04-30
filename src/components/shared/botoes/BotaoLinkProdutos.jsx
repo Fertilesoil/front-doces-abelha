@@ -1,7 +1,6 @@
 ﻿import { Link } from "react-router-dom";
 import { botaoLinkPropType } from "../../../PropTypes/PropTypeValidation"
 
-
 const BotaoLinkProdutos = ({ caminho, loading, titulo }) => {
   return (
     <Link

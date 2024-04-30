@@ -1,6 +1,6 @@
 ﻿/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useLayoutEffect, useReducer, useState } from "react"
 import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
 import { Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,6 +9,8 @@ import { TailSpinLoader } from "../loaders/TailSpinLoader";
 import toast from "react-hot-toast";
 import { Api } from "../../services/Api";
 import DropDown from "../shared/DropDown";
+import BotaoEditar from "../shared/botoes/produtosVenda/BotaoEditar";
+import BotaoExcluir from "../shared/botoes/produtosVenda/BotaoExcluir";
 
 
 const CardEditavelProdutoVenda = () => {
@@ -25,6 +27,20 @@ const CardEditavelProdutoVenda = () => {
     deletarProduto,
     setLoadProduto,
     setProduto } = useContext(ProdutoVendaContext);
+
+  const [state, dispatch] = useReducer((state, dispatch) => ({
+    ...state,
+    ...dispatch
+  }), {
+    nome: "",
+    descricao: "",
+    peso: "",
+    preco: "",
+    quantidade: "",
+    recheio_id: ""
+  });
+
+  console.log(state);
 
   const { id } = useParams();
 
@@ -44,6 +60,7 @@ const CardEditavelProdutoVenda = () => {
       setProduto(produtoAchado.data);
       const { recheio, id: id_objeto, ...novoObjeto } = produtoAchado.data;
       setProdutoAtualizado(novoObjeto);
+      dispatch({ ...novoObjeto });
       setLoadProduto(false);
       toast.success(`Produto encontrado com sucesso!`);
     } catch (error) {
@@ -52,7 +69,7 @@ const CardEditavelProdutoVenda = () => {
     }
   }
 
-  const guardarValores = (e) => {
+  const guardarValores = useCallback((e) => {
     let nome = e.target.name;
     let valor = e.target.value;
 
@@ -60,9 +77,9 @@ const CardEditavelProdutoVenda = () => {
       ...produtoAtualizado,
       [nome]: valor
     })
-  }
+  });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (id === ":id") {
       navigate("/produtosVenda");
     }
@@ -105,16 +122,16 @@ const CardEditavelProdutoVenda = () => {
                 <h4 className="font-medium text-lg">Novo nome do produto</h4>
                 <input
                   name="nome"
-                  onChange={guardarValores}
+                  onChange={(e) => dispatch({ nome: e.target.value })}
                   placeholder={`${produto?.nome}`}
                   type="text"
-                  className=" font-bold text-xl leading-3 text-center flex-1 shrink-0 ring-2 ring-teal-300"
+                  className=" font-bold text-xl leading-3 rounded-md text-center flex-1 shrink-0 ring-2 ring-teal-300"
                 />
               </div>
 
               <input
                 name="descricao"
-                onChange={guardarValores}
+                onChange={(e) => dispatch({ descricao: e.target.value })}
                 type="text"
                 placeholder={`${produto?.descricao}`}
                 className="text-sm text-balance text-center bg-teal-100 w-full rounded-md font-[500] leading-5 p-1"
@@ -125,7 +142,7 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Peso do produto</h6>
                   <input
                     name="peso"
-                    onChange={guardarValores}
+                    onChange={(e) => dispatch({ peso: e.target.value })}
                     placeholder={`${produto?.peso}`}
                     type="number"
                     className="border-4 border-teal-100 rounded-md p-2 w-full flex items-center justify-center placeholder:text-sm"
@@ -136,7 +153,7 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Preço do produto</h6>
                   <input
                     name="preco"
-                    onChange={guardarValores}
+                    onChange={(e) => dispatch({ preco: e.target.value })}
                     placeholder={`${produto?.preco}`}
                     type="number"
                     className="border-4 border-teal-100 rounded-md p-2 w-full flex items-center justify-center placeholder:text-sm"
@@ -149,7 +166,7 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Quantidade</h6>
                   <input
                     name="quantidade"
-                    onChange={guardarValores}
+                    onChange={(e) => dispatch({ quantidade: e.target.value })}
                     placeholder={`${produto?.quantidade}`}
                     type="number"
                     className="text-sm text-balance text-center bg-teal-100 w-full rounded-md font-[500] leading-5 p-1"
@@ -170,46 +187,19 @@ const CardEditavelProdutoVenda = () => {
                 </div>
               </div>
 
-              <div className="w-[80%] flex justify-around items-center text-white rounded-sm ">
-                <button
-                  onClick={(e) => {
-                    deletarProduto(e, id);
-                  }}
-                  className={`w-[30%] bg-teal-300 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center ${ativoBotaoExcluir && "py-2"}`}
-                >
-                  {
-                    ativoBotaoExcluir ?
-                      <TailSpinLoader
-                        cor={`#F7F7F7`}
-                        tamanho={21}
-                        velocidade={.9}
-                      />
-                      :
-                      <Trash2
-                        size={25}
-                        strokeWidth={2.5}
-                      />
-                  }
-                </button>
+              <div className="w-[80%] flex justify-evenly items-center text-white rounded-sm ">
+                <BotaoExcluir
+                  funcao={deletarProduto}
+                  id={id}
+                  loader={ativoBotaoExcluir}
+                />
 
-                <button
-                  onClick={(e) => {
-                    atualizarProduto(e, id, produtoAtualizado);
-                  }}
-                  className={`flex items-center justify-center w-[30%] bg-teal-300 font-[600] hover:scale-105 transition-all rounded-[.3rem] py-1.5 ${ativoBotaoEditar && "py-2"}`}
-                >
-                  {
-                    ativoBotaoEditar ?
-                      <TailSpinLoader
-                        cor={`#F7F7F7`}
-                        tamanho={21}
-                        velocidade={.9}
-                      />
-                      :
-                      "Atualizar"
-                  }
-
-                </button>
+                <BotaoEditar
+                  funcao={atualizarProduto}
+                  id={id}
+                  produto={produtoAtualizado}
+                  loader={ativoBotaoEditar}
+                />
               </div>
             </>
         }

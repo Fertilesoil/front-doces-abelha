@@ -91,3 +91,29 @@ export const dropDownPropType = {
   funcao: PropTypes.func,
   produto: PropTypes.object
 }
+
+export const botaoFormularioProdVendasPropType = {
+  funcao: PropTypes.func,
+  produto: PropTypes.object,
+  loader: PropTypes.bool
+}
+
+export const campoFormularioProdVendasPropType = {
+  titulo: PropTypes.string,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  funcao: PropTypes.func
+}
+
+export const botaoEditarProdVendaPropType = {
+  funcao: PropTypes.func,
+  id: PropTypes.string,
+  produto: PropTypes.object,
+  loader: PropTypes.bool
+}
+
+export const botaoExcluirProdVendaPropType = {
+  funcao: PropTypes.func,
+  id: PropTypes.string,
+  loader: PropTypes.bool
+}

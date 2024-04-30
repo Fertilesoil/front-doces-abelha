@@ -1,34 +1,39 @@
-﻿import { useContext } from "react"
+﻿import React, { useContext } from "react"
 import { Outlet } from "react-router-dom"
 import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
 import BotaoLinkProdutos from "../../components/shared/botoes/BotaoLinkProdutos";
 import NavHomeWrapper from "../../components/shared/wrapers/NavHomeWrapper";
+
+const Wrapper = React.memo(NavHomeWrapper);
+const Links = React.memo(BotaoLinkProdutos);
 
 const HomeProdutos = () => {
 
   const { ativoCard, ativoCadastrar, ativoEditar } = useContext(ProdutoVendaContext);
 
   return (
-    <NavHomeWrapper secao={`Produtos`} elemento={<Outlet />}>
-      <BotaoLinkProdutos
+    <Wrapper secao={`Produtos`} elemento={<Outlet />}>
+      <Links
         caminho={`cadastrar`}
         loading={ativoCadastrar}
         titulo={`Cadastrar`}
       />
 
-      <BotaoLinkProdutos
+      <Links
         caminho={`produtos`}
         loading={ativoCard}
         titulo={`Produtos`}
       />
 
-      <BotaoLinkProdutos
+      <Links
         caminho={`editar/:id`}
         loading={ativoEditar}
         titulo={`Editar`}
       />
-    </NavHomeWrapper>
+    </Wrapper>
   )
 }
 
-export default HomeProdutos
+const HomeProducts = React.memo(HomeProdutos);
+
+export default HomeProducts
