@@ -5,8 +5,8 @@ import { Api } from "../services/Api";
 import toast from "react-hot-toast";
 
 const recheio = (set) => ({
-  recheioEncontrado: null,
   recheios: [],
+  recheioEncontrado: null,
   loading: false,
   ativoCadastro: false,
   ativoListagem: false,
@@ -17,11 +17,6 @@ const recheio = (set) => ({
   setCadastro: () => set(state => ({ ativoCadastro: !state.ativoCadastro })),
   setListagem: () => set(state => ({ ativoListagem: !state.ativoListagem })),
   setEdicao: () => set(state => ({ ativoEdicao: !state.ativoEdicao })),
-  loadingRecheio: () => set(state => ({ loadingCardRecheio: !state.loadingCardRecheio })),
-
-  capturarRecheio: (e) => ({ nome: e.target.value }),
-
-  setarLoading: () => set(recheio => { recheio.loading = !recheio.loading }),
 
   listarRecheios: async () => {
     set(() => ({ chamadaFeita: true }));

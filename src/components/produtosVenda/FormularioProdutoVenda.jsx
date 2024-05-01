@@ -1,52 +1,55 @@
 ﻿/* eslint-disable no-unused-vars */
-import { useCallback, useContext, useEffect, useState } from "react";
-import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
+import { useCallback, useEffect, useState } from "react";
 import FormularioWraper from "../shared/wrapers/FormularioWraper";
 import DropDown from "../shared/DropDown";
 import BotaoFormulario from "../shared/botoes/produtosVenda/BotaoFormulario";
 import CampoFormulario from "../shared/botoes/produtosVenda/CampoFormulario";
-import { Api } from "../../services/Api";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
+import { useRecheioStore } from "../../stores/RecheioStore";
+import { shallow } from "zustand/shallow";
 
 const FormularioProdutoVenda = () => {
 
+  const setCadastrar = useProdutoVendaStore(state => state.setCadastrar);
+  const loading = useProdutoVendaStore(state => state.loading);
+  const atualizarProdutos = useProdutoVendaStore(state => state.atualizarProdutos);
+  const produtos = useProdutoVendaStore(state => state.produtos);
+  const enviarFormulario = useProdutoVendaStore(state => state.enviarFormulario);
+
+  const recheios = useRecheioStore(state => state.recheios);
+  const loadingRecheio = useRecheioStore(state => state.loading);
+  const listarRecheios = useRecheioStore(state => state.listarRecheios);
+  const filtered = recheios.toSorted((a, b) => a.nome.localeCompare(b.nome), shallow);
+
   const [produto, setProduto] = useState(null);
 
-  const [carregando, setCarregando] = useState(true);
-
-  const [loading, setLoading] = useState(false);
+  // const [carregando, setCarregando] = useState(true);
 
   const navigate = useNavigate();
 
-  const {
-    setAtivoCadastrar,
-    recheios,
-    listarRecheios,
-    atualizarProdutos} = useContext(ProdutoVendaContext);
+  // const enviarFormulario = async (e, produto) => {
+  //   e.preventDefault();
+  //   setLoading();
+  //   try {
 
-  const enviarFormulario = async (e, produto) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
+  //     produto.peso = Number(produto.peso)
+  //     produto.preco = Number(produto.preco)
+  //     produto.quantidade = Number(produto.quantidade)
 
-      produto.peso = Number(produto.peso)
-      produto.preco = Number(produto.preco)
-      produto.quantidade = Number(produto.quantidade)
+  //     const produtoVenda = await Api.post("/api/cadastrarProdutosVenda", produto);
 
-      const produtoVenda = await Api.post("/api/cadastrarProdutosVenda", produto);
+  //     await atualizarProdutos();
 
-      await atualizarProdutos();
-
-      setLoading(false);
-      toast.success("Produto registrado com sucesso!");
-      navigate("/produtosVenda/produtos");
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
-      toast.error(error.response.data.msg);
-    }
-  };
+  //     setLoading();
+  //     toast.success("Produto registrado com sucesso!");
+  //     navigate("/produtosVenda/produtos");
+  //   } catch (error) {
+  //     setLoading();
+  //     toast.error(error.message);
+  //     toast.error(error.response.data.msg);
+  //   }
+  // };
 
   const guardarValores = useCallback((e) => {
     let nome = e.target.name;
@@ -59,19 +62,20 @@ const FormularioProdutoVenda = () => {
   }, [produto]);
 
   useEffect(() => {
-    setAtivoCadastrar(true);
+    setCadastrar();
+    return () => {
+      setCadastrar();
+    }
+  }, []);
 
+  useEffect(() => {
     if (recheios.length === 0) {
       listarRecheios();
     }
 
-    if (recheios.length > 0)
-      setCarregando(false);
-
-    return () => {
-      setAtivoCadastrar(false)
-    }
-  }, [listarRecheios, recheios, setAtivoCadastrar]);
+    // if (recheios.length > 0)
+    //   setCarregando(false);
+  }, [listarRecheios, recheios]);
 
   return (
     <FormularioWraper>
@@ -120,8 +124,8 @@ const FormularioProdutoVenda = () => {
           <h3>Recheio</h3>
 
           <DropDown
-            loading={carregando}
-            recheios={recheios}
+            loading={loadingRecheio}
+            recheios={filtered}
             posicao={`bottom-[6.7rem]`}
             funcao={setProduto}
             produto={produto}
@@ -129,7 +133,14 @@ const FormularioProdutoVenda = () => {
         </div>
 
         <BotaoFormulario
-          funcao={enviarFormulario}
+          funcao={async (e) => {
+            await enviarFormulario(e, produto)
+            if (enviarFormulario === null) {
+              await atualizarProdutos()
+              console.log(produtos);
+              navigate("/produtosVenda/produtos");
+            }
+          }}
           produto={produto}
           loader={loading}
         />

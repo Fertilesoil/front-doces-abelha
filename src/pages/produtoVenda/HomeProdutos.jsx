@@ -1,15 +1,17 @@
-﻿import React, { useContext } from "react"
+﻿import React from 'react'
 import { Outlet } from "react-router-dom"
-import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
 import BotaoLinkProdutos from "../../components/shared/botoes/BotaoLinkProdutos";
 import NavHomeWrapper from "../../components/shared/wrapers/NavHomeWrapper";
+import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
 
 const Wrapper = React.memo(NavHomeWrapper);
 const Links = React.memo(BotaoLinkProdutos);
 
 const HomeProdutos = () => {
 
-  const { ativoCard, ativoCadastrar, ativoEditar } = useContext(ProdutoVendaContext);
+  const ativoCard = useProdutoVendaStore(state => state.ativoCard);
+  const ativoCadastrar = useProdutoVendaStore(state => state.ativoCadastrar);
+  const ativoEditar = useProdutoVendaStore(state => state.ativoEditar);
 
   return (
     <Wrapper secao={`Produtos`} elemento={<Outlet />}>

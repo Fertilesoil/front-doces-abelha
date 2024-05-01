@@ -1,26 +1,29 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect } from "react";
-import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
 import CardProdutoVenda from "../../components/produtosVenda/CardProdutoVenda";
 import SpiralLoader from "../../components/loaders/SpiralLoader";
+import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
+import { useCallback, useEffect } from "react";
 
 const ListarProdutosVenda = () => {
 
-  const {
-    setAtivoCard,
-    produtos,
-    loading,
-    listarProdutos } = useContext(ProdutoVendaContext);
+  const setCard = useProdutoVendaStore(state => state.setCard);
+  const produtos = useProdutoVendaStore(state => state.produtos);
+  const loading = useProdutoVendaStore(state => state.loading);
+  const listar = useProdutoVendaStore(state => state.listarProdutos);
+
+  const listarProdutos = useCallback(() => {
+    listar();
+  },[listar]);
 
   useEffect(() => {
-    setAtivoCard(true);
+    setCard();
 
     if (produtos.length === 0) {
       listarProdutos();
     }
 
     return () => {
-      setAtivoCard(false);
+      setCard();
     }
   }, [produtos.length]);
 
