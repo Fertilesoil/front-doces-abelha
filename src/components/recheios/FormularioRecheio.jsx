@@ -1,15 +1,20 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useState } from "react";
-import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
+import { useState } from "react";
 import BotaoFormulario from "../shared/botoes/recheio/BotaoFormulario";
+import { useRecheioStore } from "../../stores/RecheioStore";
+import { useNavigate } from "react-router-dom";
 
 const FormularioRecheio = () => {
+
+  const navigate = useNavigate();
 
   const [recheio, setRecheio] = useState({
     nome: ""
   });
 
-  const { cadastrarRecheio, loading } = useContext(RecheioContext);
+  const loading = useRecheioStore(state => state.loading);
+  const listarRecheios = useRecheioStore(state => state.listarRecheios);
+  const cadastrarRecheio = useRecheioStore(state => state.cadastrarRecheio);
 
   return (
     <form className="ring-4 ring-pink-200 focus-within:ring-pink-400 rounded-md shadow-md w-[40%] h-[30%] flex flex-col justify-center gap-5 items-center font-ManRope bg-pink-50 transition-all duration-[.37s]">
@@ -29,7 +34,13 @@ const FormularioRecheio = () => {
 
       <BotaoFormulario
         loader={loading}
-        funcao={cadastrarRecheio}
+        funcao={async (e) => {
+          await cadastrarRecheio(e, recheio);
+          if (cadastrarRecheio) {
+            await listarRecheios();
+            navigate("/recheios/listar");
+          }
+        }}
         recheio={recheio}
       />
     </form>

@@ -1,25 +1,31 @@
 ﻿/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useState } from "react";
+import { useState } from "react";
 import SpiralLoader from "../loaders/SpiralLoader";
-import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
 import { idPropType } from "../../PropTypes/PropTypeValidation";
 import BotaoEditar from "../shared/botoes/recheio/BotaoEditar";
 import BotaoExcluir from "../shared/botoes/recheio/BotaoExcluir";
+import { useRecheioStore } from "../../stores/RecheioStore";
+import { useNavigate } from "react-router-dom";
 
 const EditarRecheio = ({ id }) => {
+
+  const navigate = useNavigate();
 
   const [recheioAtualizado, setRecheioAtualizado] = useState({
     nome: ""
   });
 
-  const {
-    recheio,
-    loadAtualizar,
-    loadExcluir,
-    loading,
-    atualizarRecheio,
-    deletarRecheio } = useContext(RecheioContext);
+  const recheios = useRecheioStore(state => state.recheios);
+
+  const recheio = useRecheioStore(state => state.recheioEncontrado);
+  const loading = useRecheioStore(state => state.loading);
+  const loadAtualizar = useRecheioStore(state => state.loadAtualizar);
+  const loadExcluir = useRecheioStore(state => state.loadExcluir);
+  const atualizarRecheio = useRecheioStore(state => state.atualizarRecheio);
+  const deletarRecheio = useRecheioStore(state => state.deletarRecheio);
+
+  const atualizado = recheios.find(recheio => recheio.id === id);
 
   return (
     <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope  focus-within:ring-pink-400 transition-all duration-[.37s] shadow-sm">
@@ -37,12 +43,12 @@ const EditarRecheio = ({ id }) => {
             </span>
 
             <h3 className="whitespace-nowrap overflow-hidden text-center font-[600] text-slate-500 leading-4">
-              {recheio.id}
+              {recheio?.id}
             </h3>
           </div>
 
           <h2 className="font-bold text-xl text-slate-600">
-            {recheio.nome}
+            {recheio?.nome}
           </h2>
 
           <input
@@ -55,13 +61,26 @@ const EditarRecheio = ({ id }) => {
           <div className="w-[80%] flex justify-around items-center text-white rounded-sm">
             <BotaoExcluir
               loader={loadExcluir}
-              funcao={deletarRecheio}
+              funcao={async () => {
+                await deletarRecheio(id);
+                if (deletarRecheio) {
+                  const novosRecheios = recheios.filter(recheio => recheio !== atualizado);
+                  useRecheioStore.setState(() => ({ recheios: [...novosRecheios] }));
+                }
+                navigate("/recheios/listar");
+              }}
               id={id}
             />
 
             <BotaoEditar
               loader={loadAtualizar}
-              funcao={atualizarRecheio}
+              funcao={async () => {
+                await atualizarRecheio(id, recheioAtualizado);
+                if (atualizarRecheio) {
+                  atualizado.nome = recheioAtualizado.nome;
+                  navigate("/recheios/listar");
+                }
+              }}
               id={id}
               recheio={recheioAtualizado}
             />

@@ -1,9 +1,9 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import FormularioWraper from "../../components/shared/wrapers/FormularioWraper";
-import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
 import { useNavigate, useParams } from "react-router-dom";
 import CardEditarRecheio from "../../components/recheios/CardEditarRecheio";
+import { useRecheioStore } from "../../stores/RecheioStore";
 
 
 const EditarRecheio = () => {
@@ -12,23 +12,25 @@ const EditarRecheio = () => {
 
   const navigate = useNavigate();
 
-  const {
-    setAtivoEditar,
-    buscarRecheioPorId } = useContext(RecheioContext);
+  const setEstado = useRecheioStore(recheio => recheio.setEdicao);
+  const buscarRecheio = useRecheioStore(recheio => recheio.buscarRecheioPorId);
 
   useEffect(() => {
-    setAtivoEditar(true);
-
     if (id === ":id") {
       navigate("/recheios");
     } else {
-      buscarRecheioPorId(id);
-    }
-
-    return () => {
-      setAtivoEditar(false);
+      buscarRecheio(id);
     }
   }, [id]);
+
+  useEffect(() => {
+    setEstado();
+
+    return () => {
+      setEstado();
+      useRecheioStore.setState(() => ({recheioEncontrado: null}));
+    }
+  }, []);
 
   return (
     <FormularioWraper>

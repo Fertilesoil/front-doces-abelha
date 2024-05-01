@@ -1,33 +1,34 @@
 ﻿import { Outlet } from "react-router-dom"
-import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
-import { useContext } from "react";
 import BotaoLinkRecheios from "../../components/shared/botoes/BotaoLinkRecheios";
 import NavHomeWrapper from "../../components/shared/wrapers/NavHomeWrapper";
+import { useRecheioStore } from "../../stores/RecheioStore";
 
 const HomeRecheios = () => {
 
-  const { ativoCadastrar, ativoEditar, ativoListar } = useContext(RecheioContext);
+  const ativoCadastro = useRecheioStore(recheio => recheio.ativoCadastro);
+  const ativoListagem = useRecheioStore(recheio => recheio.ativoListagem);
+  const ativoEdicao = useRecheioStore(recheio => recheio.ativoEdicao);
 
   return (
     <NavHomeWrapper secao={`Recheios`} elemento={<Outlet />}>
       <BotaoLinkRecheios
         caminho={`cadastro`}
-        loading={ativoCadastrar}
+        loading={ativoCadastro}
         titulo={`Cadastrar`}
       />
 
       <BotaoLinkRecheios
         caminho={`listar`}
-        loading={ativoListar}
+        loading={ativoListagem}
         titulo={`Recheios`}
       />
 
       <BotaoLinkRecheios
         caminho={`editar/:id`}
-        loading={ativoEditar}
+        loading={ativoEdicao}
         titulo={`Editar`}
       />
-      </NavHomeWrapper>
+    </NavHomeWrapper>
   )
 }
 

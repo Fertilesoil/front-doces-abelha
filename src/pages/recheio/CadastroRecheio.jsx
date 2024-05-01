@@ -1,17 +1,17 @@
 ﻿/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import FormularioWraper from "../../components/shared/wrapers/FormularioWraper"
-import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
 import FormularioRecheio from "../../components/recheios/FormularioRecheio";
+import { useRecheioStore } from "../../stores/RecheioStore";
 
 const CadastroRecheio = () => {
 
-  const { setAtivoCadastrar } = useContext(RecheioContext);
+  const setEstado = useRecheioStore(state => state.setCadastro);
 
   useEffect(() => {
-    setAtivoCadastrar(true);
+    setEstado();
     return () => {
-      setAtivoCadastrar(false);
+      setEstado();
     }
   }, []);
 

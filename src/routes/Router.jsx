@@ -13,7 +13,6 @@ import DefaultLayout from "../pages/DefaultLayout";
 import HomeRecheios from "../pages/recheio/HomeRecheios";
 import ListarRecheios from "../pages/recheio/ListarRecheios";
 import EditarRecheio from "../pages/recheio/EditarRecheio";
-import { RecheioProvider } from "../contexts/RecheioContext/RecheioProvider";
 import { ProdutoVendaProvider } from "../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaProvider";
 import FormularioProdutoVenda from "../components/produtosVenda/FormularioProdutoVenda";
 import ListarProdutosVenda from "../pages/produtoVenda/ListarProdutosVenda";
@@ -42,13 +41,11 @@ export const router = createBrowserRouter(
                     </Route>
                 </Route>
 
-                <Route path="/recheios" element={<Protected> <RecheioProvider /> </Protected>} >
-                    <Route path="" element={<Protected> <HomeRecheios /> </Protected>}>
-                        <Route path="" element={<Protected> <HomeTemplateRecheios /> </Protected>} />
-                        <Route path="cadastro" element={<Protected> <CadastroRecheio /> </Protected>} />
-                        <Route path="listar" element={<Protected> <ListarRecheios /> </Protected>} />
-                        <Route path="editar/:id" element={<Protected> <EditarRecheio /> </Protected>} />
-                    </Route>
+                <Route path="/recheios" element={<Protected> <HomeRecheios /> </Protected>}>
+                    <Route path="" element={<Protected> <HomeTemplateRecheios /> </Protected>} />
+                    <Route path="cadastro" element={<Protected> <CadastroRecheio /> </Protected>} />
+                    <Route path="listar" element={<Protected> <ListarRecheios /> </Protected>} />
+                    <Route path="editar/:id" element={<Protected> <EditarRecheio /> </Protected>} />
                 </Route>
 
             </Route>

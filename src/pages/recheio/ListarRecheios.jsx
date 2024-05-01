@@ -1,32 +1,43 @@
-﻿/* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useLayoutEffect } from "react";
+﻿
+import { useCallback, useEffect } from "react";
 import CardRecheio from "../../components/recheios/CardRecheio";
 import SpiralLoader from "../../components/loaders/SpiralLoader";
-import { RecheioContext } from "../../contexts/RecheioContext/RecheioContext";
-import BarraDePesquisa from "../../components/shared/BarraDePesquisa";
+import { useRecheioStore } from "../../stores/RecheioStore";
+import { shallow } from "zustand/shallow";
 
 const ListarRecheios = () => {
+  
+  const setEstado = useRecheioStore(state => state.setListagem);
+  
+  const listarRecheios = useRecheioStore(state => state.listarRecheios);
+  const loading = useRecheioStore(state => state.loading);
+  const recheios = useRecheioStore(state => state.recheios);
+  
+  const filtered = recheios.toSorted((a, b) => a.nome.localeCompare(b.nome), shallow);
 
-  const { recheios, listarRecheios, loading, setAtivoListar } = useContext(RecheioContext);
+  const listagem = useCallback(() => {
+    listarRecheios();
+  }, [listarRecheios]);
 
-  useLayoutEffect(() => {
-    setAtivoListar(true);
+  useEffect(() => {
+    if (recheios.length === 0)
+      listagem();
+  }, [recheios.length, listagem]);
 
-    if (recheios.length === 0) {
-      listarRecheios();
-    }
+  useEffect(() => {
+    setEstado();
 
     return () => {
-      setAtivoListar(false);
+      setEstado();
     }
-  }, [recheios.length])
+  }, [])
 
   return (
     <section className="my-4">
 
-      <BarraDePesquisa
+      {/* <BarraDePesquisa
         reserva={recheios}
-      />
+      /> */}
 
       <div className="grid grid-cols-3 grid-rows-subgrid place-items-center gap-4">
         {loading ?
@@ -38,7 +49,7 @@ const ListarRecheios = () => {
             />
           </div>
           :
-          recheios.map(recheio => (
+          filtered?.map(recheio => (
             <CardRecheio
               key={recheio.id}
               id={recheio.id}
