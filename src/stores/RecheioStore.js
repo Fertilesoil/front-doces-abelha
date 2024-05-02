@@ -8,15 +8,8 @@ const recheio = (set) => ({
   recheios: [],
   recheioEncontrado: null,
   loading: false,
-  ativoCadastro: false,
-  ativoListagem: false,
-  ativoEdicao: false,
   loadAtualizar: false,
   loadExcluir: false,
-
-  setCadastro: () => set(state => ({ ativoCadastro: !state.ativoCadastro })),
-  setListagem: () => set(state => ({ ativoListagem: !state.ativoListagem })),
-  setEdicao: () => set(state => ({ ativoEdicao: !state.ativoEdicao })),
 
   listarRecheios: async () => {
     set(() => ({ loading: true }));

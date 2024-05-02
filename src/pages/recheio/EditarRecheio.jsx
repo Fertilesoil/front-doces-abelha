@@ -12,7 +12,6 @@ const EditarRecheio = () => {
 
   const navigate = useNavigate();
 
-  const setEstado = useRecheioStore(recheio => recheio.setEdicao);
   const buscarRecheio = useRecheioStore(recheio => recheio.buscarRecheioPorId);
 
   useEffect(() => {
@@ -22,15 +21,6 @@ const EditarRecheio = () => {
       buscarRecheio(id);
     }
   }, [id]);
-
-  useEffect(() => {
-    setEstado();
-
-    return () => {
-      setEstado();
-      useRecheioStore.setState(() => ({recheioEncontrado: null}));
-    }
-  }, []);
 
   return (
     <FormularioWraper>

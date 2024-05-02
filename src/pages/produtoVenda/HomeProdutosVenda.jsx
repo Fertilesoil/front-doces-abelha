@@ -2,40 +2,29 @@
 import { Outlet } from "react-router-dom"
 import BotaoLinkProdutos from "../../components/shared/botoes/BotaoLinkProdutos";
 import NavHomeWrapper from "../../components/shared/wrapers/NavHomeWrapper";
-import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
-
-const Wrapper = React.memo(NavHomeWrapper);
-const Links = React.memo(BotaoLinkProdutos);
 
 const HomeProdutosVenda = () => {
 
-  const ativoCard = useProdutoVendaStore(state => state.ativoCard);
-  const ativoCadastrar = useProdutoVendaStore(state => state.ativoCadastrar);
-  const ativoEditar = useProdutoVendaStore(state => state.ativoEditar);
-
-  const Link = React.memo(Links);
-  const NavWrapper = React.memo(Wrapper);
+  const Wrapper = React.memo(NavHomeWrapper);
+  const Links = React.memo(BotaoLinkProdutos);
 
   return (
-    <NavWrapper secao={`Produtos`} elemento={<Outlet />}>
-      <Link
+    <Wrapper secao={`Produtos`} elemento={<Outlet />}>
+      <Links
         caminho={`cadastrar`}
-        loading={ativoCadastrar}
         titulo={`Cadastrar`}
       />
 
-      <Link
+      <Links
         caminho={`produtos`}
-        loading={ativoCard}
         titulo={`Produtos`}
       />
 
-      <Link
+      <Links
         caminho={`editar/:id`}
-        loading={ativoEditar}
         titulo={`Editar`}
       />
-    </NavWrapper>
+    </Wrapper>
   )
 }
 

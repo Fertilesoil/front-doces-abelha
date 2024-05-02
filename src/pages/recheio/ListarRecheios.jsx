@@ -7,8 +7,6 @@ import { shallow } from "zustand/shallow";
 
 const ListarRecheios = () => {
   
-  const setEstado = useRecheioStore(state => state.setListagem);
-  
   const listarRecheios = useRecheioStore(state => state.listarRecheios);
   const loading = useRecheioStore(state => state.loading);
   const recheios = useRecheioStore(state => state.recheios);
@@ -23,14 +21,6 @@ const ListarRecheios = () => {
     if (recheios.length === 0)
       listagem();
   }, [recheios.length, listagem]);
-
-  useEffect(() => {
-    setEstado();
-
-    return () => {
-      setEstado();
-    }
-  }, [])
 
   return (
     <section className="my-4">

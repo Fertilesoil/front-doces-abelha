@@ -2,12 +2,11 @@
 import CardProdutoVenda from "../../components/produtosVenda/CardProdutoVenda";
 import SpiralLoader from "../../components/loaders/SpiralLoader";
 import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
-import { useCallback, useEffect, useLayoutEffect } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import { shallow } from "zustand/shallow";
 
 const ListarProdutosVenda = () => {
 
-  const setCard = useProdutoVendaStore(state => state.setCard);
   const produtos = useProdutoVendaStore(state => state.produtos);
   const loading = useProdutoVendaStore(state => state.loading);
   const listar = useProdutoVendaStore(state => state.listarProdutos);
@@ -22,15 +21,7 @@ const ListarProdutosVenda = () => {
     if (produtos.length === 0) {
       listarProdutos();
     }
-  },[produtos.length]); 
-
-  useEffect(() => {
-    setCard();
-
-    return () => {
-      setCard();
-    }
-  }, []);
+  },[produtos.length]);
 
   return (
     <section className="grid grid-cols-3 grid-rows-subgrid place-items-center gap-x-1 gap-y-7 my-4">

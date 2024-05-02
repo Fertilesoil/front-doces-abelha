@@ -1,6 +1,6 @@
 ﻿/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect, useLayoutEffect, useState } from "react"
+import { useCallback, useLayoutEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import SpiralLoader from "../loaders/SpiralLoader";
 import DropDown from "../shared/DropDown";
@@ -15,7 +15,6 @@ const CardEditavelProdutoVenda = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const setEditar = useProdutoVendaStore(state => state.setEditar);
   const produto = useProdutoVendaStore(state => state.produto);
   const produtos = useProdutoVendaStore(state => state.produtos);
   const loadingProduto = useProdutoVendaStore(state => state.loadingProduto);
@@ -50,13 +49,6 @@ const CardEditavelProdutoVenda = () => {
 
     produtoEncontrado[nome] = valor;
   });
-
-  useEffect(() => {
-    setEditar();
-    return () => {
-      setEditar();
-    }
-  }, []);
 
   useLayoutEffect(() => {
     if (id === ":id") {

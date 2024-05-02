@@ -117,3 +117,7 @@ export const botaoExcluirProdVendaPropType = {
   id: PropTypes.string,
   loader: PropTypes.bool
 }
+
+export const formularioProdutoVendaPropType = {
+  filtered: PropTypes.array
+}

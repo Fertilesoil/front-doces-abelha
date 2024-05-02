@@ -9,15 +9,9 @@ const produtoVenda = (set) => ({
   produtoEncontrado: null,
   loading: false,
   loadingProduto: false,
-  ativoCard: false,
-  ativoCadastrar: false,
-  ativoEditar: false,
   botaoEditar: false,
   botaoExcluir: false,
 
-  setCard: () => set(state => ({ ativoCard: !state.ativoCard })),
-  setCadastrar: () => set(state => ({ ativoCadastrar: !state.ativoCadastrar })),
-  setEditar: () => set(state => ({ ativoEditar: !state.ativoEditar })),
   setLoading: () => set(state => ({ loading: !state.loading })),
 
   enviarFormulario: async (e, produto) => {
