@@ -19,7 +19,6 @@ const recheio = (set) => ({
   setEdicao: () => set(state => ({ ativoEdicao: !state.ativoEdicao })),
 
   listarRecheios: async () => {
-    set(() => ({ chamadaFeita: true }));
     set(() => ({ loading: true }));
     try {
       const { data } = await Api.get("/api/listarRecheios");
@@ -30,7 +29,6 @@ const recheio = (set) => ({
     } catch (error) {
       set(() => ({ loading: false }));
       toast.error(error.message);
-      set(() => ({ chamadaFeita: true }));
     }
   },
   buscarRecheioPorId: async (id) => {
@@ -38,7 +36,7 @@ const recheio = (set) => ({
       set(() => ({ loading: true }));
       const { data } = await Api.get(`/api/acharRecheio/${id}`);
 
-      useRecheioStore.setState(() => ({ recheioEncontrado: data }));
+      set(() => ({ recheioEncontrado: data }));
       toast.success(`Recheio encontrado: ${data.nome}`);
       set(() => ({ loading: false }));
     } catch (error) {

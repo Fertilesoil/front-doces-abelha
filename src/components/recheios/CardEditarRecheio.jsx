@@ -7,6 +7,7 @@ import BotaoEditar from "../shared/botoes/recheio/BotaoEditar";
 import BotaoExcluir from "../shared/botoes/recheio/BotaoExcluir";
 import { useRecheioStore } from "../../stores/RecheioStore";
 import { useNavigate } from "react-router-dom";
+import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
 
 const EditarRecheio = ({ id }) => {
 
@@ -16,8 +17,9 @@ const EditarRecheio = ({ id }) => {
     nome: ""
   });
 
-  const recheios = useRecheioStore(state => state.recheios);
+  const listarProdutos = useProdutoVendaStore(state => state.listarProdutos);
 
+  const recheios = useRecheioStore(state => state.recheios);
   const recheio = useRecheioStore(state => state.recheioEncontrado);
   const loading = useRecheioStore(state => state.loading);
   const loadAtualizar = useRecheioStore(state => state.loadAtualizar);
@@ -28,7 +30,7 @@ const EditarRecheio = ({ id }) => {
   const atualizado = recheios.find(recheio => recheio.id === id);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope  focus-within:ring-pink-400 transition-all duration-[.37s] shadow-sm">
+    <div className="flex flex-col justify-center items-center gap-3 ring ring-pink-200 rounded-md bg-pink-50 w-[24rem] min-h-32 h-44 font-ManRope focus-within:ring-pink-400 transition-all duration-[.37s] shadow-sm">
 
       {loading ?
         <SpiralLoader
@@ -66,6 +68,7 @@ const EditarRecheio = ({ id }) => {
                 if (deletarRecheio) {
                   const novosRecheios = recheios.filter(recheio => recheio !== atualizado);
                   useRecheioStore.setState(() => ({ recheios: [...novosRecheios] }));
+                  listarProdutos();
                 }
                 navigate("/recheios/listar");
               }}
@@ -78,6 +81,7 @@ const EditarRecheio = ({ id }) => {
                 await atualizarRecheio(id, recheioAtualizado);
                 if (atualizarRecheio) {
                   atualizado.nome = recheioAtualizado.nome;
+                  listarProdutos();
                   navigate("/recheios/listar");
                 }
               }}

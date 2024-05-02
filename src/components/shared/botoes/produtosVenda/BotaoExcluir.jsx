@@ -8,7 +8,7 @@ const BotaoExcluir = ({ funcao, id, loader }) => {
       onClick={(e) => {
         funcao(e, id);
       }}
-      className={`w-[30%] text-sm bg-teal-300 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center ${loader && "py-2"}`}
+      className={`w-[30%] text-sm bg-teal-500 hover:scale-105 transition-all rounded-[.3rem] py-1.5 flex justify-center items-center ${loader && "py-2"}`}
     >
       {
         loader ?

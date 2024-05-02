@@ -9,18 +9,16 @@ import Cadastro from "../pages/Cadastro";
 import HomePage from "../pages/HomePage";
 import Protected from "../middlewares/Protected";
 import DefaultLayout from "../pages/DefaultLayout";
-// import HomeProdutos from "../pages/produtoVenda/HomeProdutos";
 import HomeRecheios from "../pages/recheio/HomeRecheios";
 import ListarRecheios from "../pages/recheio/ListarRecheios";
 import EditarRecheio from "../pages/recheio/EditarRecheio";
-import { ProdutoVendaProvider } from "../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaProvider";
-import FormularioProdutoVenda from "../components/produtosVenda/FormularioProdutoVenda";
 import ListarProdutosVenda from "../pages/produtoVenda/ListarProdutosVenda";
-import CardEditavelProdutoVenda from "../components/produtosVenda/CardEditavelProdutoVenda";
 import CadastroRecheio from "../pages/recheio/CadastroRecheio";
 import HomeTemplateRecheios from "../components/recheios/HomeTemplateRecheios";
 import HomeTemplateProdutosVenda from "../components/produtosVenda/HomeTemplateProdutosVenda";
-import HomeProducts from "../pages/produtoVenda/HomeProdutos";
+import HomeProdutosVenda from "../pages/produtoVenda/HomeProdutosVenda";
+import CadastroProdutoVenda from "../pages/produtoVenda/CadastroProdutoVenda";
+import EditarProdutoVenda from "../pages/produtoVenda/EditarProdutoVenda";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -32,13 +30,11 @@ export const router = createBrowserRouter(
 
                 <Route path="/" index element={<Protected> <HomePage /> </Protected>} />
 
-                <Route path="/produtosVenda" element={<Protected> <ProdutoVendaProvider /> </Protected>} >
-                    <Route path="" element={<Protected> <HomeProducts /> </Protected>} >
-                        <Route path="" element={<Protected> <HomeTemplateProdutosVenda /> </Protected>} />
-                        <Route path="cadastrar" element={<Protected> <FormularioProdutoVenda /> </Protected>} />
-                        <Route path="produtos" element={<Protected> <ListarProdutosVenda /> </Protected>} />
-                        <Route path="editar/:id" element={<Protected> <CardEditavelProdutoVenda /> </Protected>} />
-                    </Route>
+                <Route path="/produtosVenda" element={<Protected> <HomeProdutosVenda /> </Protected>} >
+                    <Route path="" element={<Protected> <HomeTemplateProdutosVenda /> </Protected>} />
+                    <Route path="cadastrar" element={<Protected> <CadastroProdutoVenda /> </Protected>} />
+                    <Route path="produtos" element={<Protected> <ListarProdutosVenda /> </Protected>} />
+                    <Route path="editar/:id" element={<Protected> <EditarProdutoVenda /> </Protected>} />
                 </Route>
 
                 <Route path="/recheios" element={<Protected> <HomeRecheios /> </Protected>}>

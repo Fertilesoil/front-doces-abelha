@@ -8,7 +8,7 @@ import {
   Home,
   PackageSearch
 } from "lucide-react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../contexts/UserContext/UserContext";
 import toast from "react-hot-toast";
 import { childrenPropType } from "../PropTypes/PropTypeValidation";
@@ -32,21 +32,23 @@ const DefaultLayout = () => {
     }
   }
 
+  const Rotas = React.memo(NavbarItem);
+
   return (
     <>
       <Navigation>
 
-        <NavbarItem to="/" icone={<Home size={25}/>} texto="Home" />
+        <Rotas to="/" icone={<Home size={25} />} texto="Home" />
 
-        <NavbarItem to="/produtosVenda" icone={<Box size={25} />} texto="Produtos" />
+        <Rotas to="/produtosVenda" icone={<Box size={25} />} texto="Produtos" />
 
-        <NavbarItem to="/" icone={<PackageSearch size={25} />} texto="Estoque" />
+        <Rotas to="/" icone={<PackageSearch size={25} />} texto="Estoque" />
 
-        <NavbarItem to="/recheios" icone={<ChefHat size={25} />} texto="Recheios" />
+        <Rotas to="/recheios" icone={<ChefHat size={25} />} texto="Recheios" />
 
-        <NavbarItem to="/" icone={<BarChartBig size={25} />} texto="Vendas" />
+        <Rotas to="/" icone={<BarChartBig size={25} />} texto="Vendas" />
 
-        <NavbarItem funcao={logout} icone={<DoorOpen size={25} />} texto="Logout" />
+        <Rotas funcao={logout} icone={<DoorOpen size={25} />} texto="Logout" />
 
       </Navigation>
 

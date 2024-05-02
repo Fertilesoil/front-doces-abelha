@@ -2,7 +2,8 @@
 import CardProdutoVenda from "../../components/produtosVenda/CardProdutoVenda";
 import SpiralLoader from "../../components/loaders/SpiralLoader";
 import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useLayoutEffect } from "react";
+import { shallow } from "zustand/shallow";
 
 const ListarProdutosVenda = () => {
 
@@ -11,21 +12,25 @@ const ListarProdutosVenda = () => {
   const loading = useProdutoVendaStore(state => state.loading);
   const listar = useProdutoVendaStore(state => state.listarProdutos);
 
+  const filtered = produtos.toSorted((a, b) => a.nome.localeCompare(b.nome), shallow);
+
   const listarProdutos = useCallback(() => {
     listar();
   },[listar]);
 
-  useEffect(() => {
-    setCard();
-
+  useLayoutEffect(() => {
     if (produtos.length === 0) {
       listarProdutos();
     }
+  },[produtos.length]); 
+
+  useEffect(() => {
+    setCard();
 
     return () => {
       setCard();
     }
-  }, [produtos.length]);
+  }, []);
 
   return (
     <section className="grid grid-cols-3 grid-rows-subgrid place-items-center gap-x-1 gap-y-7 my-4">
@@ -39,7 +44,7 @@ const ListarProdutosVenda = () => {
             />
           </div>
           :
-          <CardProdutoVenda produtos={produtos} />
+          <CardProdutoVenda produtos={filtered} />
       }
     </section>
   )

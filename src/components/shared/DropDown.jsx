@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { dropDownPropType } from "../../PropTypes/PropTypeValidation";
 import "./DropDown.css";
 
-const DropDown = ({ loading, recheios, posicao, funcao, produto }) => {
+const DropDown = ({ loading, recheios, posicao, funcao, produto, produtoEncontrado }) => {
 
   const [expandido, setExpandido] = useState(false);
 
@@ -18,8 +18,12 @@ const DropDown = ({ loading, recheios, posicao, funcao, produto }) => {
       setExpandido(expandido => !expandido);
 
       let recheioAtual = await recheios.find(recheio => recheio.nome === e.target.textContent);
+      if (produtoEncontrado) {
+        produtoEncontrado.recheio = recheioAtual
+        produtoEncontrado.recheio_id = recheioAtual.id
+      }
       funcao({ ...produto, recheio_id: recheioAtual.id })
-    }, [funcao, produto, recheios]);
+    }, [funcao, produto, recheios, produtoEncontrado]);
 
   const toggle = (e) => {
     e.preventDefault();

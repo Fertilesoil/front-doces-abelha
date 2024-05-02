@@ -1,6 +1,5 @@
 ﻿import { FilePenLine } from "lucide-react";
 import { produtoVendaPropType } from "../../PropTypes/PropTypeValidation";
-import { formatarPreco } from "../../utils/Utilidades";
 import { Link } from "react-router-dom";
 
 const CardProdutoVenda = ({ produtos }) => {
@@ -21,7 +20,7 @@ const CardProdutoVenda = ({ produtos }) => {
               </h2>
 
               <Link
-                to={`/produtosVenda/editar/${produto.id}`}
+                to={`/produtosVenda/editar/${produto?.id}`}
                 className="text-[#F7F7F7] ring-1 ring-teal-600 bg-teal-600 rounded-sm py-1 px-2 hover:scale-110 transition-all">
                 <FilePenLine size={20} strokeWidth={2.5} />
               </Link>
@@ -41,7 +40,7 @@ const CardProdutoVenda = ({ produtos }) => {
               <span
                 className="border-4 border-teal-100 rounded-md p-2 w-[40%] flex items-center justify-center"
               >
-                R$ {formatarPreco(produto?.preco)}
+                {produto?.preco.toLocaleString("pt-BR", {style: "currency", currency: "BRL"})}
               </span>
             </div>
 

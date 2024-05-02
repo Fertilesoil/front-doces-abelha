@@ -7,35 +7,36 @@ import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
 const Wrapper = React.memo(NavHomeWrapper);
 const Links = React.memo(BotaoLinkProdutos);
 
-const HomeProdutos = () => {
+const HomeProdutosVenda = () => {
 
   const ativoCard = useProdutoVendaStore(state => state.ativoCard);
   const ativoCadastrar = useProdutoVendaStore(state => state.ativoCadastrar);
   const ativoEditar = useProdutoVendaStore(state => state.ativoEditar);
 
+  const Link = React.memo(Links);
+  const NavWrapper = React.memo(Wrapper);
+
   return (
-    <Wrapper secao={`Produtos`} elemento={<Outlet />}>
-      <Links
+    <NavWrapper secao={`Produtos`} elemento={<Outlet />}>
+      <Link
         caminho={`cadastrar`}
         loading={ativoCadastrar}
         titulo={`Cadastrar`}
       />
 
-      <Links
+      <Link
         caminho={`produtos`}
         loading={ativoCard}
         titulo={`Produtos`}
       />
 
-      <Links
+      <Link
         caminho={`editar/:id`}
         loading={ativoEditar}
         titulo={`Editar`}
       />
-    </Wrapper>
+    </NavWrapper>
   )
 }
 
-const HomeProducts = React.memo(HomeProdutos);
-
-export default HomeProducts
+export default HomeProdutosVenda

@@ -1,73 +1,43 @@
 ﻿/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useContext, useLayoutEffect, useReducer, useState } from "react"
-import { ProdutoVendaContext } from "../../contexts/ProdutosContexts/ProdutosVenda/ProdutoVendaContext";
-import { Trash2 } from "lucide-react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import SpiralLoader from "../loaders/SpiralLoader";
-import { TailSpinLoader } from "../loaders/TailSpinLoader";
-import toast from "react-hot-toast";
-import { Api } from "../../services/Api";
 import DropDown from "../shared/DropDown";
 import BotaoEditar from "../shared/botoes/produtosVenda/BotaoEditar";
 import BotaoExcluir from "../shared/botoes/produtosVenda/BotaoExcluir";
-
+import { useProdutoVendaStore } from "../../stores/ProdutoVendaStore";
+import { useRecheioStore } from "../../stores/RecheioStore";
+import { shallow } from "zustand/shallow";
 
 const CardEditavelProdutoVenda = () => {
 
-  const {
-    setAtivoEditar,
-    recheios,
-    produto,
-    ativoBotaoEditar,
-    ativoBotaoExcluir,
-    loadProduto,
-    listarRecheios,
-    atualizarProduto,
-    deletarProduto,
-    setLoadProduto,
-    setProduto } = useContext(ProdutoVendaContext);
-
-  const [state, dispatch] = useReducer((state, dispatch) => ({
-    ...state,
-    ...dispatch
-  }), {
-    nome: "",
-    descricao: "",
-    peso: "",
-    preco: "",
-    quantidade: "",
-    recheio_id: ""
-  });
-
-  console.log(state);
-
   const { id } = useParams();
-
   const navigate = useNavigate();
 
+  const setEditar = useProdutoVendaStore(state => state.setEditar);
+  const produto = useProdutoVendaStore(state => state.produto);
+  const produtos = useProdutoVendaStore(state => state.produtos);
+  const loadingProduto = useProdutoVendaStore(state => state.loadingProduto);
+  const buscarProduto = useProdutoVendaStore(state => state.buscarProduto);
+  const ativoBotaoEditar = useProdutoVendaStore(state => state.botaoEditar);
+  const ativoBotaoExcluir = useProdutoVendaStore(state => state.botaoExcluir);
+  const atualizarProduto = useProdutoVendaStore(state => state.atualizarProduto);
+  const deletarProduto = useProdutoVendaStore(state => state.deletarProduto);
+  const atualizarModificados = useProdutoVendaStore(state => state.atualizarProdutosModificados);
+
+  const loading = useRecheioStore(state => state.loading);
+  const recheios = useRecheioStore(state => state.recheios);
+  const listar = useRecheioStore(state => state.listarRecheios);
+  const filtered = recheios.toSorted((a, b) => a.nome.localeCompare(b.nome), shallow);
+
+  let produtoEncontrado = produtos.find(produto => produto.id === id);
+
+  const listarRecheios = useCallback(() => {
+    listar();
+  }, []);
+
   const [produtoAtualizado, setProdutoAtualizado] = useState(null);
-
-  console.log(produtoAtualizado);
-
-  const [carregando, setCarregando] = useState(true);
-
-  const buscarProduto = async () => {
-    setLoadProduto(true);
-    try {
-      const produtoAchado = await Api.get(`/api/listarProdutosVenda/${id}`);
-
-      setProduto(produtoAchado.data);
-      const { recheio, id: id_objeto, ...novoObjeto } = produtoAchado.data;
-      setProdutoAtualizado(novoObjeto);
-      dispatch({ ...novoObjeto });
-      setLoadProduto(false);
-      toast.success(`Produto encontrado com sucesso!`);
-    } catch (error) {
-      setLoadProduto(false);
-      toast.error(error.message);
-    }
-  }
 
   const guardarValores = useCallback((e) => {
     let nome = e.target.name;
@@ -75,28 +45,32 @@ const CardEditavelProdutoVenda = () => {
 
     setProdutoAtualizado({
       ...produtoAtualizado,
-      [nome]: valor
+      [nome]: valor,
     })
+
+    produtoEncontrado[nome] = valor;
   });
+
+  useEffect(() => {
+    setEditar();
+    return () => {
+      setEditar();
+    }
+  }, []);
 
   useLayoutEffect(() => {
     if (id === ":id") {
       navigate("/produtosVenda");
     }
 
-    setAtivoEditar(true);
-
     if (recheios.length === 0) {
       listarRecheios();
     }
 
-    if (recheios.length > 0)
-      setCarregando(false);
-
-    buscarProduto();
-    return () => {
-      setAtivoEditar(false);
-    }
+    const buscar = buscarProduto(id);
+    buscar.then((data) => {
+      setProdutoAtualizado(data);
+    });
   }, [id, recheios.length]);
 
   return (
@@ -106,7 +80,7 @@ const CardEditavelProdutoVenda = () => {
         className="ring-4 ring-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[50%] h-[70%] p-4 flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all text-slate-600">
 
         {
-          loadProduto ?
+          loadingProduto ?
             <SpiralLoader
               cor={`#14B8A6`}
               tamanho={150}
@@ -122,7 +96,7 @@ const CardEditavelProdutoVenda = () => {
                 <h4 className="font-medium text-lg">Novo nome do produto</h4>
                 <input
                   name="nome"
-                  onChange={(e) => dispatch({ nome: e.target.value })}
+                  onChange={guardarValores}
                   placeholder={`${produto?.nome}`}
                   type="text"
                   className=" font-bold text-xl leading-3 rounded-md text-center flex-1 shrink-0 ring-2 ring-teal-300"
@@ -131,7 +105,7 @@ const CardEditavelProdutoVenda = () => {
 
               <input
                 name="descricao"
-                onChange={(e) => dispatch({ descricao: e.target.value })}
+                onChange={guardarValores}
                 type="text"
                 placeholder={`${produto?.descricao}`}
                 className="text-sm text-balance text-center bg-teal-100 w-full rounded-md font-[500] leading-5 p-1"
@@ -142,7 +116,7 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Peso do produto</h6>
                   <input
                     name="peso"
-                    onChange={(e) => dispatch({ peso: e.target.value })}
+                    onChange={guardarValores}
                     placeholder={`${produto?.peso}`}
                     type="number"
                     className="border-4 border-teal-100 rounded-md p-2 w-full flex items-center justify-center placeholder:text-sm"
@@ -153,7 +127,7 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Preço do produto</h6>
                   <input
                     name="preco"
-                    onChange={(e) => dispatch({ preco: e.target.value })}
+                    onChange={guardarValores}
                     placeholder={`${produto?.preco}`}
                     type="number"
                     className="border-4 border-teal-100 rounded-md p-2 w-full flex items-center justify-center placeholder:text-sm"
@@ -166,7 +140,7 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Quantidade</h6>
                   <input
                     name="quantidade"
-                    onChange={(e) => dispatch({ quantidade: e.target.value })}
+                    onChange={guardarValores}
                     placeholder={`${produto?.quantidade}`}
                     type="number"
                     className="text-sm text-balance text-center bg-teal-100 w-full rounded-md font-[500] leading-5 p-1"
@@ -177,11 +151,12 @@ const CardEditavelProdutoVenda = () => {
                   <h6 className="font-medium text-sm ">Atual Recheio: {produto?.recheio?.nome}</h6>
 
                   <DropDown
-                    loading={carregando}
-                    recheios={recheios}
+                    loading={loading}
+                    recheios={filtered}
                     posicao={`bottom-[9rem]`}
                     funcao={setProdutoAtualizado}
                     produto={produtoAtualizado}
+                    produtoEncontrado={produtoEncontrado}
                   />
 
                 </div>
@@ -189,13 +164,27 @@ const CardEditavelProdutoVenda = () => {
 
               <div className="w-[80%] flex justify-evenly items-center text-white rounded-sm ">
                 <BotaoExcluir
-                  funcao={deletarProduto}
+                  funcao={async (e) => {
+                    const deletar = await deletarProduto(e, id);
+                    if (deletar === null) {
+                      const novoArray = produtos.filter(produto => produto.id !== id);
+                      await atualizarModificados(novoArray);
+                      navigate("/produtosVenda/produtos");
+                    }
+                  }}
                   id={id}
                   loader={ativoBotaoExcluir}
                 />
 
                 <BotaoEditar
-                  funcao={atualizarProduto}
+                  funcao={async (e) => {
+                    const atualizar = await atualizarProduto(e, id, produtoAtualizado);
+                    if (atualizar === null) {
+                      let novoArray = produtos.find(produto => produto.id === id);
+                      novoArray = produtoEncontrado;
+                      navigate("/produtosVenda/produtos");
+                    }
+                  }}
                   id={id}
                   produto={produtoAtualizado}
                   loader={ativoBotaoEditar}

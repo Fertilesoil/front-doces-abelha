@@ -1,4 +1,5 @@
-﻿/* eslint-disable no-unused-vars */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useState } from "react";
 import FormularioWraper from "../shared/wrapers/FormularioWraper";
 import DropDown from "../shared/DropDown";
@@ -13,8 +14,7 @@ const FormularioProdutoVenda = () => {
 
   const setCadastrar = useProdutoVendaStore(state => state.setCadastrar);
   const loading = useProdutoVendaStore(state => state.loading);
-  const atualizarProdutos = useProdutoVendaStore(state => state.atualizarProdutos);
-  const produtos = useProdutoVendaStore(state => state.produtos);
+  const listarProdutos = useProdutoVendaStore(state => state.listarProdutos);
   const enviarFormulario = useProdutoVendaStore(state => state.enviarFormulario);
 
   const recheios = useRecheioStore(state => state.recheios);
@@ -24,32 +24,7 @@ const FormularioProdutoVenda = () => {
 
   const [produto, setProduto] = useState(null);
 
-  // const [carregando, setCarregando] = useState(true);
-
   const navigate = useNavigate();
-
-  // const enviarFormulario = async (e, produto) => {
-  //   e.preventDefault();
-  //   setLoading();
-  //   try {
-
-  //     produto.peso = Number(produto.peso)
-  //     produto.preco = Number(produto.preco)
-  //     produto.quantidade = Number(produto.quantidade)
-
-  //     const produtoVenda = await Api.post("/api/cadastrarProdutosVenda", produto);
-
-  //     await atualizarProdutos();
-
-  //     setLoading();
-  //     toast.success("Produto registrado com sucesso!");
-  //     navigate("/produtosVenda/produtos");
-  //   } catch (error) {
-  //     setLoading();
-  //     toast.error(error.message);
-  //     toast.error(error.response.data.msg);
-  //   }
-  // };
 
   const guardarValores = useCallback((e) => {
     let nome = e.target.name;
@@ -72,10 +47,7 @@ const FormularioProdutoVenda = () => {
     if (recheios.length === 0) {
       listarRecheios();
     }
-
-    // if (recheios.length > 0)
-    //   setCarregando(false);
-  }, [listarRecheios, recheios]);
+  }, [listarRecheios, recheios.length]);
 
   return (
     <FormularioWraper>
@@ -134,10 +106,9 @@ const FormularioProdutoVenda = () => {
 
         <BotaoFormulario
           funcao={async (e) => {
-            await enviarFormulario(e, produto)
-            if (enviarFormulario === null) {
-              await atualizarProdutos()
-              console.log(produtos);
+            const enviar = await enviarFormulario(e, produto)
+            if (enviar === null) {
+              await listarProdutos();
               navigate("/produtosVenda/produtos");
             }
           }}
