@@ -1,12 +1,8 @@
-﻿import { Link, useLocation } from "react-router-dom"
+﻿import { Link } from "react-router-dom"
 import { botaoLinkPropType } from "../../../PropTypes/PropTypeValidation"
 
 
-const BotaoLinkRecheios = ({ caminho, titulo }) => {
-
-  const location = useLocation();
-  const base = `/recheios/`
-  const loading = location.pathname === `${base}${caminho}`;
+const BotaoLinkRecheios = ({ caminho, titulo, loading }) => {
 
   return (
     <Link
