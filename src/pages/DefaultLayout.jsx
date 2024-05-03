@@ -42,7 +42,7 @@ const DefaultLayout = () => {
 
         <Rotas to="/produtosVenda" icone={<Box size={25} />} texto="Produtos" />
 
-        <Rotas to="/" icone={<PackageSearch size={25} />} texto="Estoque" />
+        <Rotas to="/produtosEstoque" icone={<PackageSearch size={25} />} texto="Estoque" />
 
         <Rotas to="/recheios" icone={<ChefHat size={25} />} texto="Recheios" />
 

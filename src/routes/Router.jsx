@@ -19,6 +19,9 @@ import HomeTemplateProdutosVenda from "../components/produtosVenda/HomeTemplateP
 import HomeProdutosVenda from "../pages/produtoVenda/HomeProdutosVenda";
 import CadastroProdutoVenda from "../pages/produtoVenda/CadastroProdutoVenda";
 import EditarProdutoVenda from "../pages/produtoVenda/EditarProdutoVenda";
+import HomeProdutoEstoque from "../pages/produtoEstoque/HomeProdutoEstoque";
+import HomeTemplateProdutosEstoque from "../components/produtosEstoque/HomeTemplateProdutosEstoque";
+import CadastroProdutoEstoque from "../pages/produtoEstoque/CadastroProdutoEstoque";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,6 +38,13 @@ export const router = createBrowserRouter(
                     <Route path="cadastrar" element={<Protected> <CadastroProdutoVenda /> </Protected>} />
                     <Route path="produtos" element={<Protected> <ListarProdutosVenda /> </Protected>} />
                     <Route path="editar/:id" element={<Protected> <EditarProdutoVenda /> </Protected>} />
+                </Route>
+
+                <Route path="/produtosEstoque" element={<Protected> <HomeProdutoEstoque /> </Protected>} >
+                    <Route path="" element={<Protected> <HomeTemplateProdutosEstoque /> </Protected>} />
+                    <Route path="cadastrar" element={<Protected> <CadastroProdutoEstoque /> </Protected>} />
+                    {/* <Route path="produtos" element={<Protected> <ListarProdutosVenda /> </Protected>} />
+                    <Route path="editar/:id" element={<Protected> <EditarProdutoVenda /> </Protected>} /> */}
                 </Route>
 
                 <Route path="/recheios" element={<Protected> <HomeRecheios /> </Protected>}>
