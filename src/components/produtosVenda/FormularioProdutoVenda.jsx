@@ -42,6 +42,8 @@ const FormularioProdutoVenda = ({ filtered }) => {
         titulo={`Nome`}
         type={`text`}
         name={`nome`}
+        cor={`bg-teal-300`}
+        corFocus={`bg-teal-400`}
         funcao={guardarValores}
       />
 
@@ -49,6 +51,8 @@ const FormularioProdutoVenda = ({ filtered }) => {
         titulo={`Descricao`}
         type={`text`}
         name={`descricao`}
+        cor={`bg-teal-300`}
+        corFocus={`bg-teal-400`}
         funcao={guardarValores}
       />
 
@@ -56,6 +60,8 @@ const FormularioProdutoVenda = ({ filtered }) => {
         titulo={`Peso`}
         type={`number`}
         name={`peso`}
+        cor={`bg-teal-300`}
+        corFocus={`bg-teal-400`}
         funcao={guardarValores}
       />
 
@@ -63,6 +69,8 @@ const FormularioProdutoVenda = ({ filtered }) => {
         titulo={`Preço`}
         type={`number`}
         name={`preco`}
+        cor={`bg-teal-300`}
+        corFocus={`bg-teal-400`}
         funcao={guardarValores}
       />
 
@@ -70,6 +78,8 @@ const FormularioProdutoVenda = ({ filtered }) => {
         titulo={`Quantidade`}
         type={`number`}
         name={`quantidade`}
+        cor={`bg-teal-300`}
+        corFocus={`bg-teal-400`}
         funcao={guardarValores}
       />
 

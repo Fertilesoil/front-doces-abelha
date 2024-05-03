@@ -16,7 +16,7 @@ const produtoVenda = (set) => ({
 
   enviarFormulario: async (e, produto) => {
     e.preventDefault();
-    useProdutoVendaStore.setState(state => ({ loading: !state.loading }));
+    set(() => ({ loading: true }));
     try {
 
       produto.peso = Number(produto.peso)
@@ -25,11 +25,11 @@ const produtoVenda = (set) => ({
 
       const produtoVenda = await Api.post("/api/cadastrarProdutosVenda", produto);
 
-      useProdutoVendaStore.setState(state => ({ loading: !state.loading }));
+      set(() => ({ loading: false }));
       toast.success("Produto registrado com sucesso!");
       return null;
     } catch (error) {
-      useProdutoVendaStore.setState(state => ({ loading: !state.loading }));
+      set(() => ({ loading: false }));
       toast.error(error.message);
       toast.error(error.response.data.msg);
     }
