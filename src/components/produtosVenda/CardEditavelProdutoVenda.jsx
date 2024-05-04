@@ -48,7 +48,7 @@ const CardEditavelProdutoVenda = () => {
     })
 
     produtoEncontrado[nome] = valor;
-  });
+  },[produtoAtualizado, produtoEncontrado]);
 
   useLayoutEffect(() => {
     if (id === ":id") {
@@ -66,8 +66,6 @@ const CardEditavelProdutoVenda = () => {
   }, [id, recheios.length]);
 
   return (
-    <section className="h-[80vh] flex justify-center items-center">
-
       <form
         className="ring-4 ring-teal-200 focus-within:border-teal-400 rounded-md shadow-xl w-[50%] h-[70%] p-4 flex flex-col justify-center gap-5 items-center font-ManRope bg-teal-50 transition-all text-slate-600">
 
@@ -185,7 +183,6 @@ const CardEditavelProdutoVenda = () => {
             </>
         }
       </form>
-    </section>
   )
 }
 

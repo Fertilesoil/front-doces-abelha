@@ -2,12 +2,16 @@
 import CampoFormulario from "../shared/botoes/produtosVenda/CampoFormulario";
 import BotaoFormulario from "../shared/botoes/produtosEstoque/BotaoFormulario";
 import { useProdutoEstoqueStore } from "../../stores/ProdutoEstoqueStore";
+import { useNavigate } from "react-router-dom";
 
 
 const FormularioProdutoEstoque = () => {
 
+  const navigate = useNavigate();
+
   const loading = useProdutoEstoqueStore(state => state.loading);
   const enviarFormulario = useProdutoEstoqueStore(state => state.enviarFormulario);
+  const listarProdutos = useProdutoEstoqueStore(state => state.listarProdutos);
 
   const [produto, setProduto] = useState(null);
 
@@ -69,10 +73,10 @@ const FormularioProdutoEstoque = () => {
       <BotaoFormulario
         funcao={async (e) => {
           const enviar = await enviarFormulario(e, produto)
-          // if (enviar === null) {
-            // await listarProdutos();
-            // navigate("/produtosVenda/produtos");
-          // }
+          if (enviar === null) {
+            await listarProdutos();
+            navigate("/produtosEstoque/produtos");
+          }
         }}
         produto={produto}
         loader={loading}
