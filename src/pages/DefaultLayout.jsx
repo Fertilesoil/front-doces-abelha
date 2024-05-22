@@ -46,7 +46,7 @@ const DefaultLayout = () => {
 
         <Rotas to="/recheios" icone={<ChefHat size={25} />} texto="Recheios" />
 
-        <Rotas to="/" icone={<BarChartBig size={25} />} texto="Vendas" />
+        <Rotas to="/vendas" icone={<BarChartBig size={25} />} texto="Vendas" />
 
         <Rotas funcao={logout} icone={<DoorOpen size={25} />} texto="Logout" />
 
