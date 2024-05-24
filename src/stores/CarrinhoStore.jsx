@@ -12,7 +12,6 @@ const carrinho = (set) => ({
     try {
       const { data } = await Api.get("/api/vendas/diario");
 
-      // console.log(typeof data);
     } catch (error) {
       toast.error(error.message);
     }

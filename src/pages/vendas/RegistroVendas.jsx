@@ -1,4 +1,5 @@
 ﻿import Accordion from "../../components/vendas/Accordion"
+import ListagemProdutoVenda from "../../components/vendas/ListagemProdutoVenda"
 
 const RegistroVendas = () => {
 
@@ -6,6 +7,7 @@ const RegistroVendas = () => {
     <section className="flex flex-col h-[80vh]">
 
       <Accordion titulo={`Registrar Venda`}>
+        <ListagemProdutoVenda />
       </Accordion>
 
       <Accordion titulo={`Visualizar Vendas`}>

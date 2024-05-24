@@ -8,6 +8,7 @@ const HomeVendas = () => {
 
   const total = useCarrinhoStore(state => state.totalDiario);
   const buscarTotal = useCarrinhoStore(state => state.buscarTotalDiario);
+  const carrinho = useCarrinhoStore(state => state.carrinho);
 
   // useLayoutEffect(() => {
   //   buscarTotal();
@@ -21,7 +22,7 @@ const HomeVendas = () => {
       </div>
 
       <BotaoLinkVendas
-        quantidade={3}
+        quantidade={carrinho.length}
       />
 
     </NavHomeWrapper>
