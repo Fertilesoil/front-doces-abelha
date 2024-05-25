@@ -2,17 +2,17 @@
 import { Outlet } from 'react-router-dom'
 import { useCarrinhoStore } from '../../stores/CarrinhoStore'
 import BotaoLinkVendas from '../../components/shared/botoes/BotaoLinkVendas'
-// import { useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 
 const HomeVendas = () => {
 
   const total = useCarrinhoStore(state => state.totalDiario);
   const buscarTotal = useCarrinhoStore(state => state.buscarTotalDiario);
-  const carrinho = useCarrinhoStore(state => state.carrinho);
+  const carrinho = useCarrinhoStore(state => state.itens);
 
-  // useLayoutEffect(() => {
-  //   buscarTotal();
-  // },[]);
+  useLayoutEffect(() => {
+    buscarTotal();
+  },[]);
 
   return (
     <NavHomeWrapper secao={`Vendas`} elemento={<Outlet />}>
@@ -23,6 +23,7 @@ const HomeVendas = () => {
 
       <BotaoLinkVendas
         quantidade={carrinho.length}
+        caminho={"carrinho"}
       />
 
     </NavHomeWrapper>

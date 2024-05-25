@@ -26,6 +26,7 @@ import ListarProdutoEstoque from "../pages/produtoEstoque/ListarProdutoEstoque";
 import EditarProdutoEstoque from "../pages/produtoEstoque/EditarProdutoEstoque";
 import HomeVendas from "../pages/vendas/HomeVendas";
 import RegistroVendas from "../pages/vendas/RegistroVendas";
+import Carrinho from "../components/vendas/Carrinho";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -48,7 +49,7 @@ export const router = createBrowserRouter(
                     <Route path="" element={<Protected> <HomeTemplateProdutosEstoque /> </Protected>} />
                     <Route path="cadastrar" element={<Protected> <CadastroProdutoEstoque /> </Protected>} />
                     <Route path="produtos" element={<Protected> <ListarProdutoEstoque /> </Protected>} />
-                    <Route path="editar/:id" element={<Protected> <EditarProdutoEstoque /> </Protected>} /> 
+                    <Route path="editar/:id" element={<Protected> <EditarProdutoEstoque /> </Protected>} />
                 </Route>
 
                 <Route path="/recheios" element={<Protected> <HomeRecheios /> </Protected>}>
@@ -59,7 +60,8 @@ export const router = createBrowserRouter(
                 </Route>
 
                 <Route path="/vendas" element={<Protected> <HomeVendas /> </Protected>}>
-                <Route path="" element={<Protected> <RegistroVendas /> </Protected>} />
+                    <Route path="" element={<Protected> <RegistroVendas /> </Protected>} />
+                    <Route path="carrinho" element={<Protected> <Carrinho /> </Protected>} />
                 </Route>
 
             </Route>

@@ -14,7 +14,6 @@ const BotaoLinkVendas = ({ caminho, quantidade, loading }) => {
       <div className='bg-white ring-1 ring-teal-600 text-slate-700 font-bold  w-5 h-5 rounded-full flex justify-center items-center text-sm group-hover:text-[#F7F7F7] group-hover:bg-[#1d4151] transition-all duration-[.25s] ease-linear'>
         {quantidade}
       </div>
-
     </Link>
   )
 }

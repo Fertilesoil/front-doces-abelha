@@ -17,15 +17,18 @@ const ListagemProdutoVenda = () => {
     className: "w-[50rem] flex justify-center items-center gap-4"
   };
 
+
   const produtos = useProdutoVendaStore(state => state.produtos);
-  const carrinho = useCarrinhoStore(state => state.carrinho);
+  const carrinho = useCarrinhoStore(state => state.itens);
   const listarProdutos = useProdutoVendaStore(state => state.listarProdutos);
 
+  
   const adicionarAoCarrinho = (produto) => {
+    
     const existente = carrinho.includes(produto);
 
     if (!existente) {
-      useCarrinhoStore.setState(() => ({carrinho: [...carrinho, produto]}));
+      useCarrinhoStore.setState(() => ({ itens: [...carrinho, produto] }));
     } else {
       toast.error("Produto já adicionado ao carinho.");
     }
